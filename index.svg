@@ -209,8 +209,400 @@
       <body>
         <div id="root"></div>
 
-        <script type="module" src="./assets/bundle.js"></script>
+
       </body>
     </html>
   </foreignObject>
+
+  <!-- SYNNICAL_SVG_NATIVE_BOOT_V1 -->
+
+  <g
+    id="synnical-svg-boot-overlay"
+    pointer-events="none"
+  >
+    <rect
+      x="0"
+      y="0"
+      width="100%"
+      height="74"
+      fill="#080808"
+      fill-opacity="0.96"
+    />
+
+    <text
+      id="synnical-svg-boot-status"
+      x="18"
+      y="30"
+      fill="#ffffff"
+      font-family="sans-serif"
+      font-size="15"
+    >
+      Synnical SVG booting...
+    </text>
+
+    <text
+      id="synnical-svg-boot-detail"
+      x="18"
+      y="54"
+      fill="#999999"
+      font-family="monospace"
+      font-size="11"
+    >
+      Preparing XHTML runtime
+    </text>
+  </g>
+
+  <script type="application/ecmascript"><![CDATA[
+  (function () {
+    "use strict";
+
+    var XHTML_NS =
+      "http://www.w3.org/1999/xhtml";
+
+    var bootOverlay =
+      document.getElementById(
+        "synnical-svg-boot-overlay"
+      );
+
+    var bootStatus =
+      document.getElementById(
+        "synnical-svg-boot-status"
+      );
+
+    var bootDetail =
+      document.getElementById(
+        "synnical-svg-boot-detail"
+      );
+
+    function setBootStatus(title, detail, failed) {
+      try {
+        if (bootStatus) {
+          bootStatus.textContent =
+            String(title || "");
+        }
+
+        if (bootDetail) {
+          bootDetail.textContent =
+            String(detail || "");
+
+          bootDetail.setAttribute(
+            "fill",
+            failed ? "#ff6b6b" : "#999999"
+          );
+        }
+      } catch (_) {}
+    }
+
+    function errorText(value) {
+      if (!value) {
+        return "Unknown error";
+      }
+
+      if (value instanceof Error) {
+        return (
+          value.name +
+          ": " +
+          value.message
+        ).slice(0, 300);
+      }
+
+      return String(value).slice(0, 300);
+    }
+
+    window.addEventListener(
+      "error",
+      function (event) {
+        setBootStatus(
+          "Synnical SVG boot failed",
+          errorText(
+            event.error ||
+            event.message
+          ),
+          true
+        );
+      },
+      true
+    );
+
+    window.addEventListener(
+      "unhandledrejection",
+      function (event) {
+        setBootStatus(
+          "Synnical SVG boot failed",
+          errorText(event.reason),
+          true
+        );
+      }
+    );
+
+    try {
+      var foreignObject =
+        document.querySelector(
+          "foreignObject"
+        );
+
+      if (!foreignObject) {
+        throw new Error(
+          "foreignObject was not found"
+        );
+      }
+
+      var htmlRoot =
+        foreignObject.firstElementChild;
+
+      if (!htmlRoot) {
+        throw new Error(
+          "XHTML root was not found"
+        );
+      }
+
+      var originalCreateElement =
+        document.createElement.bind(
+          document
+        );
+
+      var originalCreateElementNS =
+        document.createElementNS.bind(
+          document
+        );
+
+      document.createElement =
+        function (tagName, options) {
+          if (
+            typeof tagName === "string"
+          ) {
+            try {
+              return originalCreateElementNS(
+                XHTML_NS,
+                tagName,
+                options
+              );
+            } catch (_) {
+              return originalCreateElementNS(
+                XHTML_NS,
+                tagName
+              );
+            }
+          }
+
+          return originalCreateElement(
+            tagName,
+            options
+          );
+        };
+
+      document.createElementNS =
+        function (
+          namespace,
+          tagName,
+          options
+        ) {
+          if (
+            namespace == null ||
+            namespace === XHTML_NS
+          ) {
+            try {
+              return originalCreateElementNS(
+                XHTML_NS,
+                tagName,
+                options
+              );
+            } catch (_) {
+              return originalCreateElementNS(
+                XHTML_NS,
+                tagName
+              );
+            }
+          }
+
+          try {
+            return originalCreateElementNS(
+              namespace,
+              tagName,
+              options
+            );
+          } catch (_) {
+            return originalCreateElementNS(
+              namespace,
+              tagName
+            );
+          }
+        };
+
+      try {
+        Object.defineProperty(
+          document,
+          "head",
+          {
+            configurable: true,
+            get: function () {
+              return htmlRoot.querySelector(
+                "head"
+              );
+            }
+          }
+        );
+      } catch (_) {}
+
+      try {
+        Object.defineProperty(
+          document,
+          "body",
+          {
+            configurable: true,
+            get: function () {
+              return htmlRoot.querySelector(
+                "body"
+              );
+            }
+          }
+        );
+      } catch (_) {}
+
+      try {
+        Object.defineProperty(
+          document,
+          "documentElement",
+          {
+            configurable: true,
+            get: function () {
+              return htmlRoot;
+            }
+          }
+        );
+      } catch (_) {}
+
+      var nativeGetElementById =
+        document.getElementById.bind(
+          document
+        );
+
+      try {
+        document.getElementById =
+          function (id) {
+            try {
+              var safe =
+                String(id).replace(
+                  /["\\]/g,
+                  "\\$&"
+                );
+
+              return (
+                htmlRoot.querySelector(
+                  '[id="' +
+                  safe +
+                  '"]'
+                ) ||
+                nativeGetElementById(id)
+              );
+            } catch (_) {
+              return nativeGetElementById(
+                id
+              );
+            }
+          };
+      } catch (_) {}
+
+      var appRoot =
+        htmlRoot.querySelector("#root");
+
+      if (!appRoot) {
+        throw new Error(
+          "#root was not found in XHTML"
+        );
+      }
+
+      setBootStatus(
+        "Synnical SVG booting...",
+        "Loading Vite application module",
+        false
+      );
+
+      var bundleUrl =
+        new URL(
+          "./assets/bundle.js",
+          window.location.href
+        ).href;
+
+      import(bundleUrl)
+        .then(function () {
+          setBootStatus(
+            "Synnical module loaded",
+            "Waiting for React to mount",
+            false
+          );
+
+          var tries = 0;
+
+          var mountedCheck =
+            window.setInterval(
+              function () {
+                tries += 1;
+
+                var root =
+                  htmlRoot.querySelector(
+                    "#root"
+                  );
+
+                if (
+                  root &&
+                  root.childNodes &&
+                  root.childNodes.length > 0
+                ) {
+                  window.clearInterval(
+                    mountedCheck
+                  );
+
+                  if (bootOverlay) {
+                    bootOverlay.setAttribute(
+                      "display",
+                      "none"
+                    );
+                  }
+
+                  return;
+                }
+
+                if (tries >= 50) {
+                  window.clearInterval(
+                    mountedCheck
+                  );
+
+                  setBootStatus(
+                    "Synnical module loaded",
+                    "React did not mount into #root",
+                    true
+                  );
+                }
+              },
+              100
+            );
+        })
+        .catch(function (error) {
+          setBootStatus(
+            "Synnical module import failed",
+            errorText(error),
+            true
+          );
+
+          console.error(
+            "[synnical-svg] bundle import failed",
+            error
+          );
+        });
+    } catch (error) {
+      setBootStatus(
+        "Synnical SVG bootstrap failed",
+        errorText(error),
+        true
+      );
+
+      console.error(
+        "[synnical-svg] bootstrap failed",
+        error
+      );
+    }
+  })();
+  ]]></script>
+
 </svg>
