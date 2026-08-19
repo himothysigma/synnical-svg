@@ -2,5 +2,7 @@
 
 Standalone Synnical OS SVG client.
 
-Frontend distributed through GitHub and jsDelivr.
-Backend services remain hosted by Synnical.
+The frontend is distributed through GitHub/jsDelivr.
+Accounts, profiles, chat, SynnFlix, uploads, Socket.IO,
+Wisp and other server-backed functionality connect to
+the normal Synnical backend.
