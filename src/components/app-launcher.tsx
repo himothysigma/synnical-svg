@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { X, Search } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { X, Search, Youtube } from 'lucide-react';
 
 interface AppLauncherProps {
   isOpen: boolean;
   onClose: () => void;
+  onLaunchApp?: (appId: string) => void;
 }
 
 interface App {
@@ -26,7 +27,14 @@ const SynnicalIcon = () => (
   </svg>
 );
 
-export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
+// #28 - YouTube icon for app launcher
+const YoutubeIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-full h-full p-1">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/>
+  </svg>
+);
+
+export function AppLauncher({ isOpen, onClose, onLaunchApp }: AppLauncherProps) {
   const [searchQuery, setSearchQuery] = useState('');
   
   const apps: App[] = [
@@ -38,11 +46,13 @@ export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
       <svg viewBox="0 0 24 24" className="w-full h-full p-2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#4CAF50"/></svg>
     ), category: 'Social', color: '#4CAF50' },
     { id: 'browser', name: 'Browser', icon: (
-      <svg viewBox="0 0 24 24" className="w-full h-full p-1"><circle cx="12" cy="12" r="10" fill="#4285F4"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#4285F4"/><stop offset="100%" stopColor="#34A853"/></linearGradient></defs></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full p-1"><circle cx="12" cy="12" r="10" fill="#4285F4"/><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#4285F4"/><stop offset="100%" stopColor="#34A853"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="url(#g1)"/></svg>
     ), category: 'Tools', color: '#4285F4' },
     { id: 'games', name: 'Games', icon: (
       <svg viewBox="0 0 24 24" className="w-full h-full p-2"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S19.17 9 20 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#FF5722"/></svg>
     ), category: 'Entertainment', color: '#FF5722' },
+    // #28 - YouTube as browsable app in launcher
+    { id: 'youtube', name: 'YouTube', icon: <YoutubeIcon />, category: 'Entertainment', color: '#FF0000' },
     { id: 'music', name: 'Music', icon: (
       <svg viewBox="0 0 24 24" className="w-full h-full p-1"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
     ), category: 'Entertainment', color: '#1DB954' },
@@ -73,16 +83,38 @@ export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
 
   const categories = [...new Set(apps.map(app => app.category))];
 
+  // #20 - Handle Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
+  const handleLaunch = (appId: string) => {
+    if (onLaunchApp) {
+      onLaunchApp(appId);
+    }
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-      onClick={onClose}
+      onClick={onClose} // #20 - Backdrop click closes modal
     >
       <div 
-        className="bg-black/30 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl w-[90%] max-w-3xl max-h-[80vh] overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
+        className="bg-black/30 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl w-[90%] max-w-3xl max-h-[80vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside
       >
         {/* Header */}
         <div className="p-6 pb-4">
@@ -99,6 +131,7 @@ export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
                 autoFocus
               />
             </div>
+            {/* #20 - Close button */}
             <button
               onClick={onClose}
               className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
@@ -117,11 +150,7 @@ export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
                 <button
                   key={app.id}
                   className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:bg-white/10 transition-all hover:scale-105 group"
-                  onClick={() => {
-                    // Handle app launch
-                    console.log('Launching:', app.name);
-                    onClose();
-                  }}
+                  onClick={() => handleLaunch(app.id)}
                 >
                   <div 
                     className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
@@ -145,10 +174,7 @@ export function AppLauncher({ isOpen, onClose }: AppLauncherProps) {
                     <button
                       key={app.id}
                       className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:bg-white/10 transition-all hover:scale-105 group"
-                      onClick={() => {
-                        console.log('Launching:', app.name);
-                        onClose();
-                      }}
+                      onClick={() => handleLaunch(app.id)}
                     >
                       <div 
                         className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
