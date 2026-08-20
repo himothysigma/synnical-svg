@@ -1,0 +1,458 @@
+     1→
+     2→>>> ls -la /root/
+     3→total 1689028
+     4→drwx------ 115 root root     20480 Aug 20 09:08 .
+     5→drwxr-xr-x  18 root root      4096 Aug 15 21:27 ..
+     6→-rw-------   1 root root     16122 Aug 19 20:17 .bash_history
+     7→drwxr-xr-x   6 root root      4096 Aug 19 18:06 .cache
+     8→drwxr-xr-x   4 root root      4096 Aug 19 08:21 .config
+     9→-rwxrwxr-x   1 root root       399 Aug 11 12:48 .dockerignore
+    10→-rwxrwxr-x   1 root root      3142 Aug 11 13:52 .env
+    11→-rwxrwxr-x   1 root root      3142 Aug 11 13:52 .env.example
+    12→-rw-r--r--   1 root root       181 Aug 19 08:21 .gitconfig
+    13→-rwxrwxr-x   1 root root       290 Aug 11 12:48 .gitignore
+    14→-rw-------   1 root root        20 Aug 19 14:10 .lesshst
+    15→drwx------   3 root root      4096 Aug 19 19:36 .local
+    16→drwxrwxr-x   8 root root      4096 Aug 11 14:24 .next
+    17→-rw-------   1 root root     25112 Aug 11 15:21 .node_repl_history
+    18→drwxr-xr-x   4 root root      4096 Aug 11 11:09 .npm
+    19→-rwxrwxr-x   1 root root       200 Aug 11 12:48 .npmrc
+    20→drwxr-xr-x   5 root root      4096 Aug 15 21:27 .pm2
+    21→drwx------   2 root root      4096 Aug 12 08:38 .ssh
+    22→-rw-rw-r--   1 root root       415 Aug 11 13:55 .z-ai-config
+    23→-rw-r--r--   1 root root         0 Aug 11 15:22 7.9.1
+    24→-rwxrwxr-x   1 root root      3270 Aug 11 12:48 Caddyfile
+    25→-rwxrwxr-x   1 root root      7826 Aug 11 12:48 DEPLOY.md
+    26→-rwxrwxr-x   1 root root      1589 Aug 11 12:48 Dockerfile
+    27→-rwxrwxr-x   1 root root     21003 Aug 11 12:56 FIXES.md
+    28→-rw-r--r--   1 root root         0 Aug 11 15:21 Installing
+    29→-rw-r--r--   1 root root         0 Aug 11 15:21 Preparing
+    30→-rwxrwxr-x   1 root root      5693 Aug 11 12:48 README.md
+    31→-rw-r--r--   1 root root         0 Aug 11 15:32 Socket.IO
+    32→-rw-r--r--   1 root root         0 Aug 11 15:32 Stratus
+    33→-rw-r--r--   1 root root         0 Aug 11 15:21 Synnical
+    34→-rw-r--r--   1 root root         0 Aug 11 15:32 Wisp
+    35→drwxrwxr-x   4 root root      4096 Aug 19 10:29 bin
+    36→-rwxrwxr-x   1 root root    350627 Aug 11 12:48 bun.lock
+    37→-rwxrwxr-x   1 root root       430 Aug 11 12:48 components.json
+    38→drwxr-xr-x   2 root root      4096 Aug 11 15:18 db
+    39→-rwxrwxr-x   1 root root      5653 Aug 11 15:19 deploy.sh
+    40→-rwxrwxr-x   1 root root      1397 Aug 11 15:25 ecosystem.config.cjs
+    41→-rwxrwxr-x   1 root root      1632 Aug 11 12:48 eslint.config.mjs
+    42→-rwxrwxr-x   1 root root       288 Aug 11 12:48 next-env.d.ts
+    43→-rwxrwxr-x   1 root root      1893 Aug 11 12:48 next.config.js
+    44→-rwxrwxr-x   1 root root      5431 Aug 11 12:48 nginx-ip.conf.example
+    45→-rwxrwxr-x   1 root root      5606 Aug 11 12:48 nginx.conf.example
+    46→drwxr-xr-x 650 root root     28672 Aug 11 15:21 node_modules
+    47→-rwxrwxr-x   1 root root    585760 Aug 11 15:32 package-lock.json
+    48→-rwxrwxr-x   1 root root      3849 Aug 11 15:21 package.json
+    49→-rwxrwxr-x   1 root root        81 Aug 11 12:48 postcss.config.mjs
+    50→drwxrwxr-x   3 root root      4096 Aug 11 13:16 prisma
+    51→drwxrwxr-x   7 root root      4096 Aug 11 12:48 public
+    52→drwx------   3 root root      4096 Aug 16 16:11 r14-r3-review.c2Hf6Y
+    53→-rwxrwxr-x   1 root root      1130 Aug 11 12:48 render.yaml
+    54→-rwxrwxr-x   1 root root      8027 Aug 11 12:48 server.ts
+    55→-rwxrwxr-x   1 root root      5253 Aug 11 12:48 setup-ssl.sh
+    56→-rwxrwxr-x   1 root root      2714 Aug 11 12:48 setup-turso.sh
+    57→-rwxrwxr-x   1 root root      8492 Aug 11 13:22 setup.sh
+    58→drwxrwxr-x   7 root root      4096 Aug 11 12:48 src
+    59→-rwxrwxr-x   1 root root      1075 Aug 11 12:48 start.sh
+    60→drwxrwxr-x   3 root root      4096 Aug 11 12:48 stratus
+    61→-rw-r--r--   1 root root       445 Aug 15 14:06 stratus-live-provider-probe-20260815-140622.log
+    62→-rw-r--r--   1 root root       309 Aug 15 14:44 stratus-live-provider-probe-20260815-144455.log
+    63→-rw-r--r--   1 root root      1807 Aug 15 14:46 stratus-live-provider-probe-20260815-144617.log
+    64→-rwx------   1 root root      7312 Aug 15 14:44 stratus-live-provider-probe.sh
+    65→drwxr-xr-x   6 root root      4096 Aug 11 10:48 synnical-ads
+    66→-rw-r--r--   1 root root    320324 Aug 20 07:41 synnical-batch1-deep-trace-20260820-074117.txt
+    67→-rw-r--r--   1 root root    631562 Aug 20 07:30 synnical-batch1-master-forensics-20260820-073000.txt
+    68→drwxr-xr-x   2 root root      4096 Aug 19 15:12 synnical-before-autoplay-test-repair-20260819-151205
+    69→drwxr-xr-x   2 root root      4096 Aug 19 14:34 synnical-before-default-maximized-20260819-143416
+    70→drwxr-xr-x   2 root root      4096 Aug 19 14:52 synnical-before-exact-maximized-20260819-145240
+    71→drwxrwxr-x  10 root root      4096 Aug 18 15:31 synnical-before-final-20260818-181325
+    72→drwxr-xr-x   4 root root      4096 Aug 19 13:24 synnical-before-final-cw-resume-20260819-132331
+    73→drwxrwxr-x  10 root root      4096 Aug 18 08:29 synnical-before-r11-7-20260818-153150
+    74→drwxr-xr-x   2 root root      4096 Aug 19 15:05 synnical-before-release-contract-20260819-150525
+    75→drwxrwxr-x  10 root root      4096 Aug 18 19:22 synnical-before-runtime-batch-20260818-202953
+    76→drwxr-xr-x   4 root root      4096 Aug 19 08:08 synnical-before-svg-bridge-20260819-080632
+    77→drwxr-xr-x   3 root root      4096 Aug 19 20:05 synnical-browser-forensics
+    78→drwxr-xr-x  11 root root      4096 Aug 15 11:13 synnical-clean-build
+    79→-rw-r--r--   1 root root      2514 Aug 15 11:13 synnical-clean-build-direct.log
+    80→-rw-r--r--   1 root root      1033 Aug 15 10:58 synnical-clean-build.log
+    81→-rwx------   1 root root      9854 Aug 15 11:47 synnical-clean-live.sh
+    82→-rw-r--r--   1 root root      2334 Aug 15 11:48 synnical-clean-production-20260815-114753.log
+    83→-rw-r--r--   1 root root   4246162 Aug 15 12:01 synnical-current-source-20260815.tar.gz
+    84→drwxr-xr-x   2 root root      4096 Aug 19 13:08 synnical-cw-regression-tests-before-20260819-130846
+    85→drwxr-xr-x   2 root root      4096 Aug 19 13:16 synnical-cw-regression-tests-before-20260819-131633
+    86→-rw-r--r--   1 root root   2461696 Aug 18 18:14 synnical-db-before-final-20260818-181325.db
+    87→-rw-r--r--   1 root root   2461696 Aug 18 15:31 synnical-db-before-r11-7-20260818-153150.db
+    88→-rw-r--r--   1 root root   2490368 Aug 18 20:29 synnical-db-before-runtime-batch-20260818-202953.db
+    89→-rw-r--r--   1 root root       353 Aug 15 11:47 synnical-db-counts-before-20260815-114753.json
+    90→drwxr-xr-x   2 root root      4096 Aug 18 18:04 synnical-env-before-final-20260818-180423
+    91→-rw-------   1 root root      5602 Aug 18 18:14 synnical-env-before-games-repair-20260820-090824
+    92→-rw-r--r--   1 root root  13661991 Aug 18 18:39 synnical-final-hotfix2-20260818.zip
+    93→drwxr-xr-x   3 root root      4096 Aug 18 18:14 synnical-final-install-20260818-180423
+    94→-rwx------   1 root root     10665 Aug 15 12:30 synnical-fix16-forensics.sh
+    95→-rw-r--r--   1 root root 500956380 Aug 11 15:12 synnical-fixed (3).zip
+    96→-rw-r--r--   1 root root     12307 Aug 20 08:10 synnical-games-routing-isolation-20260820-081024.txt
+    97→-rw-r--r--   1 root root      8307 Aug 20 09:08 synnical-games-runtime-repair-20260820-090824.txt
+    98→drwxr-xr-x   3 root root      4096 Aug 11 19:20 synnical-hotfix
+    99→drwxr-xr-x   8 root root      4096 Aug 12 11:01 synnical-hotfix-v12
+   100→drwxr-xr-x   8 root root      4096 Aug 12 11:24 synnical-hotfix-v15
+   101→drwxr-xr-x   8 root root      4096 Aug 12 11:24 synnical-hotfix-v16
+   102→drwxr-xr-x   8 root root      4096 Aug 12 11:24 synnical-hotfix-v17
+   103→drwxr-xr-x   8 root root      4096 Aug 12 11:24 synnical-hotfix-v18
+   104→drwxr-xr-x   8 root root      4096 Aug 14 07:09 synnical-hotfix-v19
+   105→-rw-r--r--   1 root root     35891 Aug 11 19:40 synnical-hotfix-v2.zip
+   106→drwxr-xr-x   8 root root      4096 Aug 12 11:24 synnical-hotfix-v20
+   107→drwxr-xr-x   7 root root      4096 Aug 14 11:20 synnical-hotfix-v21
+   108→drwxr-xr-x   6 root root      4096 Aug 12 07:51 synnical-hotfix-v6
+   109→drwxr-xr-x   7 root root      4096 Aug 12 08:19 synnical-hotfix-v7
+   110→drwxr-xr-x   7 root root      4096 Aug 12 08:19 synnical-hotfix-v8
+   111→drwxr-xr-x   7 root root      4096 Aug 12 09:55 synnical-hotfix-v9
+   112→drwxr-xr-x   3 root root      4096 Aug 18 18:40 synnical-hotfix2-20260818-184004
+   113→drwxr-xr-x   4 root root      4096 Aug 18 19:22 synnical-hotfix2-live-backup-20260818-192159
+   114→-rw-r--r--   1 root root      4516 Aug 19 07:48 synnical-index-before-bootstrap-20260819-083822.svg
+   115→-rw-r--r--   1 root root     12538 Aug 19 08:45 synnical-index-before-viewport-20260819-085325.svg
+   116→-rw-r--r--   1 root root 500956380 Aug 11 18:28 synnical-new.zip
+   117→-rw-r--r--   1 root root    641836 Aug 19 17:00 synnical-phase2-deep-audit-20260819-165933.txt
+   118→-rw-r--r--   1 root root     28406 Aug 19 17:38 synnical-phase3-auth-cache-20260819-173849.txt
+   119→-rw-r--r--   1 root root     26075 Aug 19 17:50 synnical-phase4-registration-20260819-175053.txt
+   120→-rw-r--r--   1 root root     13585 Aug 19 18:06 synnical-phase5-browser-20260819-180626.txt
+   121→-rw-r--r--   1 root root      8330 Aug 19 18:25 synnical-phase5a-browser-deps-20260819-182513.txt
+   122→-rw-r--r--   1 root root       171 Aug 19 18:25 synnical-phase5a-browser-deps-20260819-182513.txt.browser-list
+   123→-rw-r--r--   1 root root      1377 Aug 19 18:25 synnical-phase5a-browser-deps-20260819-182513.txt.ldd
+   124→-rw-r--r--   1 root root       291 Aug 19 18:25 synnical-phase5a-browser-deps-20260819-182513.txt.missing-libs
+   125→-rw-r--r--   1 root root      1564 Aug 19 18:25 synnical-phase5a-browser-deps-20260819-182513.txt.playwright-dry-run
+   126→-rw-r--r--   1 root root     47567 Aug 19 18:43 synnical-phase5b-browser-deps-20260819-184254.txt
+   127→-rw-r--r--   1 root root      8113 Aug 19 18:42 synnical-phase5b-package-snapshot-20260819-184254.txt
+   128→-rw-r--r--   1 root root     27654 Aug 19 19:37 synnical-phase5c-real-browser-20260819-193646.txt
+   129→-rw-r--r--   1 root root       865 Aug 19 20:05 synnical-phase5d-svg-success-20260819-200552.txt
+   130→-rw-r--r--   1 root root      2592 Aug 19 20:06 synnical-phase5d-svg-success-20260819-200558.txt
+   131→-rw-r--r--   1 root root       870 Aug 19 20:06 synnical-phase5d-svg-success-20260819-200558.txt.summary
+   132→-rw-r--r--   1 root root     45070 Aug 19 15:59 synnical-pitch-perfect-baseline-20260819-155817.txt
+   133→drwx------  10 root root      4096 Aug 18 13:21 synnical-preflight-20260818
+   134→-rw-------   1 root root      5602 Aug 18 15:31 synnical-r11-7-live.env
+   135→drwxr-xr-x   3 root root      4096 Aug 18 15:31 synnical-r11-7-preflight
+   136→-rw-r--r--   1 root root     63727 Aug 16 16:24 synnical-r14-install.log
+   137→-rw-r--r--   1 root root     87958 Aug 16 14:05 synnical-r14-preflight.log
+   138→-rw-r--r--   1 root root     22307 Aug 16 14:15 synnical-r14-r1-preflight.log
+   139→-rw-r--r--   1 root root     58149 Aug 16 14:33 synnical-r14-r2-preflight.log
+   140→-rw-r--r--   1 root root     58203 Aug 16 16:16 synnical-r14-r3-preflight.log
+   141→drwxr-xr-x   8 root root      4096 Aug 16 20:16 synnical-r15-100-feature-upgrade
+   142→-rw-r--r--   1 root root   4313666 Aug 16 21:46 synnical-r15-100-feature-upgrade-20260816.zip
+   143→drwxr-xr-x   8 root root      4096 Aug 16 22:43 synnical-r15-hotfix1-20260816
+   144→-rw-r--r--   1 root root   4307670 Aug 16 22:45 synnical-r15-hotfix1-20260816.zip
+   145→-rw-r--r--   1 root root     71815 Aug 16 22:50 synnical-r15-hotfix1-install.log
+   146→-rw-r--r--   1 root root     41675 Aug 16 22:47 synnical-r15-hotfix1-preflight.log
+   147→drwxr-xr-x   8 root root      4096 Aug 16 22:52 synnical-r15-hotfix2-20260816
+   148→-rw-r--r--   1 root root   4317097 Aug 16 22:56 synnical-r15-hotfix2-20260816.zip
+   149→-rw-r--r--   1 root root 423627900 Aug 16 23:24 synnical-r15-hotfix2-FULL-20260817.zip
+   150→-rw-r--r--   1 root root     49608 Aug 16 23:01 synnical-r15-hotfix2-install.log
+   151→-rw-r--r--   1 root root     41641 Aug 16 22:58 synnical-r15-hotfix2-preflight.log
+   152→-rw-r--r--   1 root root     49109 Aug 16 22:08 synnical-r15-install.log
+   153→-rw-r--r--   1 root root     41173 Aug 16 22:02 synnical-r15-preflight.log
+   154→drwxr-xr-x   8 root root      4096 Aug 17 12:11 synnical-r16-immersive-game-controls-r5-20260817
+   155→-rw-r--r--   1 root root     51963 Aug 17 12:19 synnical-r16-immersive-game-controls-r5-20260817-install.log
+   156→-rw-r--r--   1 root root     43792 Aug 17 12:15 synnical-r16-immersive-game-controls-r5-20260817-preflight.log
+   157→-rw-r--r--   1 root root   4350688 Aug 17 12:14 synnical-r16-immersive-game-controls-r5-20260817.zip
+   158→drwxr-xr-x   8 root root      4096 Aug 17 11:34 synnical-r16-playback-session-fix-r4-20260817
+   159→-rw-r--r--   1 root root     51686 Aug 17 11:46 synnical-r16-playback-session-fix-r4-20260817-install.log
+   160→-rw-r--r--   1 root root     43591 Aug 17 11:41 synnical-r16-playback-session-fix-r4-20260817-preflight.log
+   161→-rw-r--r--   1 root root   4345499 Aug 17 11:39 synnical-r16-playback-session-fix-r4-20260817.zip
+   162→drwxr-xr-x   8 root root      4096 Aug 17 10:43 synnical-r16-regression-fix-20260817
+   163→-rw-r--r--   1 root root    111536 Aug 17 11:00 synnical-r16-regression-fix-20260817-preflight.log
+   164→-rw-r--r--   1 root root   4333740 Aug 17 10:59 synnical-r16-regression-fix-20260817.zip
+   165→drwxr-xr-x   8 root root      4096 Aug 17 11:02 synnical-r16-regression-fix-r2-20260817
+   166→-rw-r--r--   1 root root     40242 Aug 17 11:05 synnical-r16-regression-fix-r2-20260817-preflight.log
+   167→-rw-r--r--   1 root root   4337130 Aug 17 11:03 synnical-r16-regression-fix-r2-20260817.zip
+   168→drwxr-xr-x   8 root root      4096 Aug 17 11:02 synnical-r16-regression-fix-r3-20260817
+   169→-rw-r--r--   1 root root     51291 Aug 17 11:26 synnical-r16-regression-fix-r3-20260817-install.log
+   170→-rw-r--r--   1 root root     43132 Aug 17 11:16 synnical-r16-regression-fix-r3-20260817-preflight.log
+   171→-rw-r--r--   1 root root   4337151 Aug 17 11:14 synnical-r16-regression-fix-r3-20260817.zip
+   172→drwxr-xr-x   8 root root      4096 Aug 17 12:45 synnical-r17-foundation-r6-20260817
+   173→-rw-r--r--   1 root root     52981 Aug 17 13:02 synnical-r17-foundation-r6-20260817-install.log
+   174→-rw-r--r--   1 root root     44872 Aug 17 12:57 synnical-r17-foundation-r6-20260817-preflight.log
+   175→-rw-r--r--   1 root root   4351952 Aug 17 12:54 synnical-r17-foundation-r6-20260817.zip
+   176→drwxr-xr-x   8 root root      4096 Aug 17 13:34 synnical-r18-privacy-security-lab-r7-1-20260817
+   177→-rw-r--r--   1 root root     43065 Aug 17 14:28 synnical-r18-privacy-security-lab-r7-1-20260817-preflight.log
+   178→-rw-r--r--   1 root root   4390655 Aug 17 14:26 synnical-r18-privacy-security-lab-r7-1-20260817.zip
+   179→drwxr-xr-x   8 root root      4096 Aug 17 13:34 synnical-r18-privacy-security-lab-r7-2-20260817
+   180→-rw-r--r--   1 root root     54833 Aug 17 14:45 synnical-r18-privacy-security-lab-r7-2-20260817-install.log
+   181→-rw-r--r--   1 root root     46605 Aug 17 14:43 synnical-r18-privacy-security-lab-r7-2-20260817-preflight.log
+   182→-rw-r--r--   1 root root   4390982 Aug 17 14:41 synnical-r18-privacy-security-lab-r7-2-20260817.zip
+   183→drwxr-xr-x   8 root root      4096 Aug 17 13:34 synnical-r18-privacy-security-lab-r7-20260817
+   184→-rw-r--r--   1 root root     16010 Aug 17 13:55 synnical-r18-privacy-security-lab-r7-20260817-preflight.log
+   185→-rw-r--r--   1 root root   4388272 Aug 17 13:40 synnical-r18-privacy-security-lab-r7-20260817.zip
+   186→drwxr-xr-x   8 root root      4096 Aug 17 14:58 synnical-r19-moderation-audit-r8-20260817
+   187→-rw-r--r--   1 root root     55593 Aug 17 15:20 synnical-r19-moderation-audit-r8-20260817-install.log
+   188→-rw-r--r--   1 root root     47401 Aug 17 15:14 synnical-r19-moderation-audit-r8-20260817-preflight.log
+   189→-rw-r--r--   1 root root   4371821 Aug 17 15:12 synnical-r19-moderation-audit-r8-20260817.zip
+   190→drwxr-xr-x   8 root root      4096 Aug 17 15:31 synnical-r20-friendship-social-r9-1-20260817
+   191→-rw-r--r--   1 root root     57507 Aug 17 16:05 synnical-r20-friendship-social-r9-1-20260817-install.log
+   192→-rw-r--r--   1 root root     49420 Aug 17 15:59 synnical-r20-friendship-social-r9-1-20260817-preflight.log
+   193→-rw-r--r--   1 root root   4417097 Aug 17 15:57 synnical-r20-friendship-social-r9-1-20260817.zip
+   194→drwxr-xr-x   8 root root      4096 Aug 17 15:31 synnical-r20-friendship-social-r9-20260817
+   195→-rw-r--r--   1 root root     45934 Aug 17 15:38 synnical-r20-friendship-social-r9-20260817-preflight.log
+   196→-rw-r--r--   1 root root   4414592 Aug 17 15:37 synnical-r20-friendship-social-r9-20260817.zip
+   197→drwxr-xr-x   8 root root      4096 Aug 17 17:00 synnical-r21-mega-expansion-r10-1-20260817
+   198→-rw-r--r--   1 root root     62493 Aug 17 17:32 synnical-r21-mega-expansion-r10-1-20260817-install.log
+   199→-rw-r--r--   1 root root     54383 Aug 17 17:27 synnical-r21-mega-expansion-r10-1-20260817-preflight.log
+   200→-rw-r--r--   1 root root   4515216 Aug 17 17:25 synnical-r21-mega-expansion-r10-1-20260817.zip
+   201→drwxr-xr-x   8 root root      4096 Aug 17 17:00 synnical-r21-mega-expansion-r10-20260817
+   202→-rw-r--r--   1 root root     56144 Aug 17 17:11 synnical-r21-mega-expansion-r10-20260817-preflight.log
+   203→-rw-r--r--   1 root root   4512065 Aug 17 17:09 synnical-r21-mega-expansion-r10-20260817.zip
+   204→drwxr-xr-x   8 root root      4096 Aug 17 17:53 synnical-r22-synnical-os-r11-1-20260817
+   205→-rw-r--r--   1 root root     54134 Aug 17 19:09 synnical-r22-synnical-os-r11-1-20260817-preflight.log
+   206→-rw-r--r--   1 root root   4556581 Aug 17 19:07 synnical-r22-synnical-os-r11-1-20260817.zip
+   207→drwxr-xr-x   8 root root      4096 Aug 17 19:15 synnical-r22-synnical-os-r11-2-20260817
+   208→-rw-r--r--   1 root root     65474 Aug 17 19:34 synnical-r22-synnical-os-r11-2-20260817-install.log
+   209→-rw-r--r--   1 root root     57311 Aug 17 19:28 synnical-r22-synnical-os-r11-2-20260817-preflight.log
+   210→-rw-r--r--   1 root root   4556982 Aug 17 19:26 synnical-r22-synnical-os-r11-2-20260817.zip
+   211→drwxr-xr-x   8 root root      4096 Aug 17 17:53 synnical-r22-synnical-os-r11-20260817
+   212→-rw-r--r--   1 root root     51966 Aug 17 18:10 synnical-r22-synnical-os-r11-20260817-preflight.log
+   213→-rw-r--r--   1 root root   4525188 Aug 17 18:09 synnical-r22-synnical-os-r11-20260817.zip
+   214→drwxrwxr-x   8 root root      4096 Aug 17 19:15 synnical-r22-synnical-os-r11-3-20260817
+   215→-rw-r--r--   1 root root     69116 Aug 17 21:32 synnical-r22-synnical-os-r11-3-20260817-install.log
+   216→-rw-r--r--   1 root root     60900 Aug 17 21:29 synnical-r22-synnical-os-r11-3-20260817-preflight.log
+   217→-rw-r--r--   1 root root   5959568 Aug 17 21:26 synnical-r22-synnical-os-r11-3-20260817.zip
+   218→drwxrwxr-x   8 root root      4096 Aug 17 19:15 synnical-r22-synnical-os-r11-4-20260817
+   219→-rw-r--r--   1 root root     70439 Aug 17 22:47 synnical-r22-synnical-os-r11-4-20260817-install.log
+   220→-rw-r--r--   1 root root     62232 Aug 17 22:43 synnical-r22-synnical-os-r11-4-20260817-preflight.log
+   221→-rw-r--r--   1 root root  13702088 Aug 17 22:41 synnical-r22-synnical-os-r11-4-20260817.zip
+   222→drwxrwxr-x   8 root root      4096 Aug 18 08:05 synnical-r22-synnical-os-r11-5-20260818
+   223→-rw-r--r--   1 root root     71136 Aug 18 08:29 synnical-r22-synnical-os-r11-5-20260818-install.log
+   224→-rw-r--r--   1 root root     63020 Aug 18 08:24 synnical-r22-synnical-os-r11-5-20260818-preflight.log
+   225→-rw-r--r--   1 root root  13704252 Aug 18 08:22 synnical-r22-synnical-os-r11-5-20260818.zip
+   226→-rw-r--r--   1 root root  13605578 Aug 18 14:25 synnical-r22-synnical-os-r11-7-batch1-20260818.zip
+   227→-rw-r--r--   1 root root  13658098 Aug 18 18:04 synnical-r23-synnical-os-r12-final-20260818.zip
+   228→drwxrwxr-x  11 root root      4096 Aug 19 13:23 synnical-resume-noautoreload-candidate-20260819-124719
+   229→drwxr-xr-x   2 root root      4096 Aug 19 12:47 synnical-resume-noautoreload-source-20260819-124719
+   230→drwxr-xr-x   2 root root      4096 Aug 19 12:52 synnical-resume-noautoreload-source-20260819-125232
+   231→drwxr-xr-x   2 root root      4096 Aug 19 14:04 synnical-resume-safe-source-20260819-140442
+   232→drwxr-xr-x   2 root root      4096 Aug 19 12:33 synnical-resume-source-before-20260819-123344
+   233→drwxr-xr-x   2 root root      4096 Aug 19 12:33 synnical-resume-source-before-20260819-123346
+   234→drwxr-xr-x   3 root root      4096 Aug 18 20:29 synnical-runtime-batch-20260818-200926
+   235→-rw-r--r--   1 root root  13665669 Aug 18 20:06 synnical-runtime-fixes-batch-20260818.zip
+   236→-rw-r--r--   1 root root     17145 Aug 20 08:27 synnical-stratus-config-recovery-20260820-082706.txt
+   237→-rw-r--r--   1 root root     18103 Aug 20 08:18 synnical-stratus-runtime-identity-20260820-081845.txt
+   238→drwxr-xr-x   3 root root      4096 Aug 19 14:10 synnical-svg-before-cache-compat-20260819-141043
+   239→drwxrwxr-x  10 root root      4096 Aug 19 08:07 synnical-svg-bridge-candidate-20260819-080632
+   240→drwxrwxr-x  12 root root      4096 Aug 19 14:04 synnical-svg-client-20260818-214238
+   241→drwxr-xr-x   2 root root      4096 Aug 19 11:46 synnical-svg-cw-before-20260819-114628
+   242→drwxr-xr-x   2 root root      4096 Aug 19 12:12 synnical-svg-cw-rail-before-20260819-121243
+   243→drwxr-xr-x   5 root root      4096 Aug 19 09:32 synnical-svg-parity-before-20260819-093247
+   244→drwxr-xr-x   9 root root      4096 Aug 19 14:10 synnical-svg-publish-20260819-082427
+   245→drwxr-xr-x   3 root root      4096 Aug 19 07:48 synnical-svg-stage3-backups
+   246→-rw-r--r--   1 root root   1342269 Aug 12 11:06 synnical-ultimate-hotfix-v12.zip
+   247→-rw-r--r--   1 root root   1355379 Aug 12 12:36 synnical-ultimate-hotfix-v15.zip
+   248→-rw-r--r--   1 root root   1360140 Aug 12 15:29 synnical-ultimate-hotfix-v16.zip
+   249→-rw-r--r--   1 root root   1365383 Aug 12 15:43 synnical-ultimate-hotfix-v17.zip
+   250→-rw-r--r--   1 root root   1372010 Aug 14 06:56 synnical-ultimate-hotfix-v18.zip
+   251→-rw-r--r--   1 root root   1372354 Aug 14 07:08 synnical-ultimate-hotfix-v19.zip
+   252→-rw-r--r--   1 root root   1375737 Aug 14 08:02 synnical-ultimate-hotfix-v20.zip
+   253→-rw-r--r--   1 root root   2665608 Aug 14 11:16 synnical-ultimate-hotfix-v21.zip
+   254→-rw-r--r--   1 root root   1309175 Aug 12 07:59 synnical-ultimate-hotfix-v6.zip
+   255→-rw-r--r--   1 root root   1326616 Aug 12 08:39 synnical-ultimate-hotfix-v7.zip
+   256→-rw-r--r--   1 root root   1332439 Aug 12 09:03 synnical-ultimate-hotfix-v8.zip
+   257→-rw-r--r--   1 root root   1323734 Aug 12 09:54 synnical-ultimate-hotfix-v9.zip
+   258→-rw-r--r--   1 root root      2334 Aug 15 11:34 synnical-var-www-clean-build.log
+   259→-rw-r--r--   1 root root   3021981 Aug 11 11:36 synnical-with-ads.zip
+   260→drwxr-xr-x   7 root root      4096 Aug 14 08:52 synnicalfixfixfix1
+   261→-rw-r--r--   1 root root   2667502 Aug 14 11:27 synnicalfixfixfix1.zip
+   262→drwxr-xr-x   8 root root      4096 Aug 14 14:06 synnicalfixfixfix10
+   263→-rw-r--r--   1 root root   2801628 Aug 14 19:03 synnicalfixfixfix10.zip
+   264→drwxr-xr-x   8 root root      4096 Aug 14 14:06 synnicalfixfixfix11
+   265→-rw-r--r--   1 root root   2804667 Aug 14 19:14 synnicalfixfixfix11.zip
+   266→drwxr-xr-x   8 root root      4096 Aug 14 19:23 synnicalfixfixfix12
+   267→-rw-r--r--   1 root root   2805899 Aug 14 19:49 synnicalfixfixfix12.zip
+   268→drwxr-xr-x   8 root root      4096 Aug 14 20:07 synnicalfixfixfix13
+   269→-rw-r--r--   1 root root   2811407 Aug 14 20:10 synnicalfixfixfix13.zip
+   270→drwxr-xr-x   8 root root      4096 Aug 15 07:56 synnicalfixfixfix14
+   271→-rw-r--r--   1 root root   2834526 Aug 15 08:27 synnicalfixfixfix14.zip
+   272→drwxr-xr-x   8 root root      4096 Aug 15 07:56 synnicalfixfixfix15
+   273→-rw-r--r--   1 root root   2850940 Aug 15 10:25 synnicalfixfixfix15.zip
+   274→drwxr-xr-x   8 root root      4096 Aug 15 07:56 synnicalfixfixfix16
+   275→drwxr-xr-x   8 root root      4096 Aug 16 07:28 synnicalfixfixfix16-r10
+   276→-rw-r--r--   1 root root   3002360 Aug 16 08:08 synnicalfixfixfix16-r10-validated-20260816.zip
+   277→drwxr-xr-x   8 root root      4096 Aug 16 08:17 synnicalfixfixfix16-r11
+   278→-rw-r--r--   1 root root   3008168 Aug 16 08:23 synnicalfixfixfix16-r11-validated-20260816.zip
+   279→drwxr-xr-x   8 root root      4096 Aug 16 09:11 synnicalfixfixfix16-r12
+   280→-rw-r--r--   1 root root   3041839 Aug 16 10:44 synnicalfixfixfix16-r12-validated-20260816.zip
+   281→drwxr-xr-x   8 root root      4096 Aug 16 12:46 synnicalfixfixfix16-r14
+   282→-rw-r--r--   1 root root   3059993 Aug 16 14:03 synnicalfixfixfix16-r14-candidate-20260816.zip
+   283→-rw-r--r--   1 root root   3061100 Aug 16 14:14 synnicalfixfixfix16-r14-candidate-r1-20260816.zip
+   284→-rw-r--r--   1 root root   3041752 Aug 16 14:30 synnicalfixfixfix16-r14-candidate-r2-20260816.zip
+   285→-rw-r--r--   1 root root   3062527 Aug 16 16:03 synnicalfixfixfix16-r14-candidate-r3-20260816.zip
+   286→drwxr-xr-x   8 root root      4096 Aug 15 12:41 synnicalfixfixfix16-r2
+   287→-rw-r--r--   1 root root     47785 Aug 15 12:58 synnicalfixfixfix16-r2-install-20260815-125724.log
+   288→-rw-r--r--   1 root root   2923868 Aug 15 12:54 synnicalfixfixfix16-r2-validated-20260815.zip
+   289→drwxr-xr-x   8 root root      4096 Aug 15 15:08 synnicalfixfixfix16-r3
+   290→-rw-r--r--   1 root root     45863 Aug 15 15:38 synnicalfixfixfix16-r3-install-20260815-153749.log
+   291→-rw-r--r--   1 root root   2932290 Aug 15 15:36 synnicalfixfixfix16-r3-validated-20260815.zip
+   292→drwxr-xr-x   8 root root      4096 Aug 15 19:23 synnicalfixfixfix16-r4
+   293→-rw-r--r--   1 root root   2944957 Aug 15 21:31 synnicalfixfixfix16-r4-validated-20260815.zip
+   294→drwxr-xr-x   8 root root      4096 Aug 15 21:10 synnicalfixfixfix16-r5
+   295→-rw-r--r--   1 root root   2958971 Aug 15 21:31 synnicalfixfixfix16-r5-validated-20260815.zip
+   296→drwxr-xr-x   8 root root      4096 Aug 15 22:07 synnicalfixfixfix16-r6
+   297→-rw-r--r--   1 root root   2962834 Aug 15 22:40 synnicalfixfixfix16-r6-validated-20260815.zip
+   298→drwxr-xr-x   8 root root      4096 Aug 15 22:31 synnicalfixfixfix16-r7
+   299→-rw-r--r--   1 root root   2966110 Aug 15 22:40 synnicalfixfixfix16-r7-validated-20260815.zip
+   300→drwxr-xr-x   8 root root      4096 Aug 15 23:12 synnicalfixfixfix16-r8
+   301→-rw-r--r--   1 root root   2987246 Aug 16 06:34 synnicalfixfixfix16-r8-validated-20260815.zip
+   302→-rw-r--r--   1 root root   2920000 Aug 15 12:12 synnicalfixfixfix16-validated-20260815.zip
+   303→-rw-r--r--   1 root root   2920000 Aug 15 12:06 synnicalfixfixfix16.zip
+   304→drwxr-xr-x   7 root root      4096 Aug 14 08:52 synnicalfixfixfix2
+   305→-rw-r--r--   1 root root   2669710 Aug 14 11:44 synnicalfixfixfix2.zip
+   306→drwxr-xr-x   7 root root      4096 Aug 14 08:52 synnicalfixfixfix3
+   307→-rw-r--r--   1 root root   2669804 Aug 14 11:52 synnicalfixfixfix3.zip
+   308→drwxr-xr-x   7 root root      4096 Aug 14 08:52 synnicalfixfixfix4
+   309→-rw-r--r--   1 root root   2674183 Aug 14 12:40 synnicalfixfixfix4.zip
+   310→drwxr-xr-x   7 root root      4096 Aug 14 13:10 synnicalfixfixfix5
+   311→-rw-r--r--   1 root root   2713484 Aug 14 13:37 synnicalfixfixfix5.zip
+   312→drwxr-xr-x   7 root root      4096 Aug 14 13:10 synnicalfixfixfix6
+   313→-rw-r--r--   1 root root   2715459 Aug 14 14:01 synnicalfixfixfix6.zip
+   314→drwxr-xr-x   8 root root      4096 Aug 14 14:06 synnicalfixfixfix7
+   315→-rw-r--r--   1 root root   2724525 Aug 14 14:27 synnicalfixfixfix7.zip
+   316→drwxr-xr-x   8 root root      4096 Aug 14 14:06 synnicalfixfixfix8
+   317→-rw-r--r--   1 root root   2759362 Aug 14 15:15 synnicalfixfixfix8.zip
+   318→drwxr-xr-x   8 root root      4096 Aug 14 18:19 synnicalfixfixfix9
+   319→-rw-r--r--   1 root root   2800628 Aug 14 18:19 synnicalfixfixfix9.zip
+   320→-rwxrwxr-x   1 root root      1696 Aug 11 12:48 tailwind.config.ts
+   321→-rwxrwxr-x   1 root root       730 Aug 11 12:48 tsconfig.json
+   322→-rw-rw-r--   1 root root    315395 Aug 11 14:22 tsconfig.tsbuildinfo
+   323→
+   324→
+   325→>>> pm2 list 2>/dev/null
+   326→┌────┬─────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+   327→│ id │ name        │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+   328→├────┼─────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+   329→│ 0  │ synnical    │ default     │ 0.8.0   │ fork    │ 179443   │ 29m    │ 1    │ online    │ 0%       │ 60.5mb   │ root     │ disabled │
+   330→└────┴─────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+   331→host metrics | cpu: 1.1% | ram usage: 3.9% | eth0: ⇓ 0.006mb/s ⇑ 0mb/s | disk: ⇓ 0.157mb/s ⇑ 3.164mb/s |
+   332→
+   333→
+   334→>>> cat /etc/caddy/Caddyfile
+   335→# Synnical — Caddy config with automatic HTTPS
+   336→# Caddy automatically provisions and renews Let's Encrypt SSL certificates
+   337→# when you use a real domain name instead of just a port.
+   338→#
+   339→# Prerequisites:
+   340→#   - DNS A record for synnical.co.uk pointing to your server IP
+   341→#   - DNS A record for www.synnical.co.uk pointing to your server IP
+   342→#   - Ports 80 and 443 open in your firewall
+   343→#   - Caddy installed: https://caddyserver.com/docs/install
+   344→#
+   345→# After deploying, Caddy will automatically:
+   346→#   1. Obtain an SSL certificate from Let's Encrypt
+   347→#   2. Redirect all HTTP traffic to HTTPS
+   348→#   3. Renew the certificate before it expires
+   349→#   4. Serve the Next.js app over HTTPS (fixing the "not secure" error)
+   350→#   5. Enable wss:// for the Wisp proxy (fixing the proxy browser error)
+   351→
+   352→synnical.co.uk, www.synnical.co.uk {
+   353→        # Automatically redirect HTTP to HTTPS (Caddy does this implicitly,
+   354→        # but we make it explicit for clarity)
+   355→        encode gzip
+   356→
+   357→        # Security headers
+   358→        header {
+   359→                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+   360→                X-Frame-Options "SAMEORIGIN"
+   361→                X-Content-Type-Options "nosniff"
+   362→                Referrer-Policy "strict-origin-when-cross-origin"
+   363→                Permissions-Policy "camera=(), microphone=(), geolocation=()"
+   364→        }
+   365→
+   366→        # Handle the XTransformPort query parameter for dynamic port proxying
+   367→        @transform_port_query {
+   368→                query XTransformPort=*
+   369→        }
+   370→
+   371→        handle @transform_port_query {
+   372→                reverse_proxy localhost:{query.XTransformPort} {
+   373→                        header_up Host {host}
+   374→                        header_up X-Forwarded-For {remote_host}
+   375→                        header_up X-Forwarded-Proto https
+   376→                        header_up X-Real-IP {remote_host}
+   377→                }
+   378→        }
+   379→
+   380→        # Wisp proxy WebSocket — needs long timeouts and no buffering
+   381→        @wisp path /wisp/*
+   382→        handle @wisp {
+   383→                reverse_proxy localhost:3000 {
+   384→                        header_up Host {host}
+   385→                        header_up X-Forwarded-For {remote_host}
+   386→                        header_up X-Forwarded-Proto https
+   387→                        header_up X-Real-IP {remote_host}
+   388→                        flush_interval -1
+   389→                }
+   390→        }
+   391→
+   392→        # Socket.IO — WebSocket support
+   393→        @socketio path /socket.io/*
+   394→        handle @socketio {
+   395→                reverse_proxy localhost:3000 {
+   396→                        header_up Host {host}
+   397→                        header_up X-Forwarded-For {remote_host}
+   398→                        header_up X-Forwarded-Proto https
+   399→                        header_up X-Real-IP {remote_host}
+   400→                        flush_interval -1
+   401→                }
+   402→        }
+   403→
+   404→        # Cloud gaming API — NDJSON streaming + WebSocket signaling
+   405→        @cloudgaming path /api/games/cloud/*
+   406→        handle @cloudgaming {
+   407→                reverse_proxy localhost:3000 {
+   408→                        header_up Host {host}
+   409→                        header_up X-Forwarded-For {remote_host}
+   410→                        header_up X-Forwarded-Proto https
+   411→                        header_up X-Real-IP {remote_host}
+   412→                        flush_interval -1
+   413→                }
+   414→        }
+   415→
+   416→        # File uploads — stream through without buffering
+   417→        @uploads path /api/uploads/*
+   418→        handle @uploads {
+   419→                reverse_proxy localhost:3000 {
+   420→                        header_up Host {host}
+   421→                        header_up X-Forwarded-For {remote_host}
+   422→                        header_up X-Forwarded-Proto https
+   423→                        header_up X-Real-IP {remote_host}
+   424→                        flush_interval -1
+   425→                }
+   426→        }
+   427→
+   428→        # Default — proxy to Next.js app
+   429→        handle {
+   430→                reverse_proxy localhost:3000 {
+   431→                        header_up Host {host}
+   432→                        header_up X-Forwarded-For {remote_host}
+   433→                        header_up X-Forwarded-Proto https
+   434→                        header_up X-Real-IP {remote_host}
+   435→                }
+   436→        }
+   437→}
+   438→
+   439→# HTTP listener — redirects to HTTPS automatically
+   440→# Caddy handles this implicitly when you specify a domain, but if you
+   441→# need to serve on a specific HTTP port for debugging:
+   442→# :80 {
+   443→#       redir https://{host}{uri} permanent
+   444→# }
+   445→
+   446→
+   447→>>> ls -la /var/www/ 2>/dev/null; ls -la /srv/ 2>/dev/null
+   448→total 24
+   449→drwxr-xr-x  6 root root 4096 Aug 18 20:29 .
+   450→drwxr-xr-x 12 root root 4096 Aug  7 21:58 ..
+   451→-rw-r--r--  1 root root    0 Aug 18 08:28 .synnical-r15-install.lock
+   452→drwxr-xr-x  2 root root 4096 Aug  7 22:19 html
+   453→drwxrwxr-x 10 root root 4096 Aug 19 13:24 synnical
+   454→drwxr-xr-x 11 root root 4096 Aug 15 11:34 synnical-clean-probe
+   455→drwxr-xr-x  9 root root 4096 Aug 15 10:26 synnical-next-before-clean-20260815-114753
+   456→total 8
+   457→drwxr-xr-x  2 root root 4096 Oct  1  2025 .
+   458→drwxr-xr-x 18 root root 4096 Aug 15 21:27 ..
