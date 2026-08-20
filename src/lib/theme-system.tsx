@@ -10,7 +10,7 @@
 
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 
 // #32 - Theme definitions
 export interface SynnicalTheme {
@@ -165,29 +165,32 @@ const THEME_STORAGE_KEY = 'synnical.theme.v1';
 const DEFAULT_THEME_ID = 'blood';
 
 /**
+ * Get initial theme from localStorage (called once during initialization)
+ */
+function getInitialThemeId(): string {
+  if (typeof window === 'undefined') return DEFAULT_THEME_ID;
+  try {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    if (saved && SYNNTHEMES[saved]) {
+      return saved;
+    }
+  } catch (e) {
+    // Silently fail - use default
+  }
+  return DEFAULT_THEME_ID;
+}
+
+/**
  * Theme Provider Component
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [themeId, setThemeIdState] = useState(DEFAULT_THEME_ID);
-  const [loaded, setLoaded] = useState(false);
+  const [themeId, setThemeIdState] = useState(getInitialThemeId);
+  const mountedRef = useRef(false);
 
-  // Load theme from localStorage on mount
+  // Apply theme CSS variables when theme changes (after mount)
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved && SYNNTHEMES[saved]) {
-        setThemeIdState(saved);
-      }
-    } catch (e) {
-      console.warn('[Theme] Failed to load saved theme:', e);
-    }
-    setLoaded(true);
-  }, []);
-
-  // Apply theme CSS variables when theme changes
-  useEffect(() => {
-    if (!loaded) return;
-
+    mountedRef.current = true;
+    
     const theme = SYNNTHEMES[themeId] || SYNNTHEMES[DEFAULT_THEME_ID];
     
     // Apply CSS variables to :root
@@ -202,7 +205,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       console.warn('[Theme] Failed to save theme:', e);
     }
-  }, [themeId, loaded]);
+  }, [themeId]);
 
   const setTheme = (newThemeId: string) => {
     if (SYNNTHEMES[newThemeId]) {
