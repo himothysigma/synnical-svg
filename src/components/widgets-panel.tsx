@@ -26,7 +26,7 @@ export function WidgetsPanel({ date }: WidgetsPanelProps) {
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   
   // Generate calendar days
-  const calendarDays = [];
+  const calendarDays: (number | null)[] = [];
   // Empty cells before first day
   const startOffset = firstDay === 0 ? 6 : firstDay - 1;
   for (let i = 0; i < startOffset; i++) {
