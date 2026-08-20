@@ -1,0 +1,1478 @@
+SYNNICAL SVG HANDOFF
+====================
+
+Repository:
+himothysigma/synnical-svg
+
+The SVG build is distributed through GitHub + jsDelivr.
+
+There are 100 permanent SVG aliases:
+synnical-001.svg
+through
+synnical-100.svg
+
+There is also:
+index.svg
+
+
+==================================================
+CURRENT SVG STATE
+==================================================
+
+The last audited local SVG repository HEAD was:
+
+2879866ebda1aa75a9a1de890fd3c500e906a8c7
+
+At the last audit, these local files were identical:
+
+index.svg
+synnical-001.svg
+synnical-050.svg
+synnical-100.svg
+
+SHA-256:
+
+9aa7f0160ff6b4ee5592b6cd00c92128954dc026a57d49fe08d25e934ad99805
+
+
+==================================================
+IMPORTANT ARCHITECTURE
+==================================================
+
+The SVG frontend itself is hosted independently through GitHub/jsDelivr.
+
+Static files such as:
+
+- SVG wrapper
+- JavaScript
+- CSS
+- icons/images
+- Scramjet static assets
+- WASM
+- service worker files
+- chunks
+
+can be distributed entirely through GitHub/jsDelivr.
+
+HOWEVER:
+
+The SVG app is NOT backend-independent.
+
+svg-client/runtime-bridge.ts currently hardcodes:
+
+export const SYNNICAL_BACKEND_ORIGIN =
+  "https://synnical.co.uk"
+
+Relative /api/* requests are rewritten to that backend.
+
+Therefore:
+
+SVG frontend changes can be pushed ONLY to synnical-svg without updating the normal synnical.co.uk frontend.
+
+BUT backend-dependent changes still require the backend at synnical.co.uk, or another replacement backend, to be updated.
+
+Examples of SVG-only changes:
+
+- UI
+- layouts
+- buttons
+- animations
+- desktop behaviour
+- visual changes
+- client-side components
+- static assets
+- frontend error handling
+
+These can be updated only in synnical-svg.
+
+Examples that REQUIRE backend changes too:
+
+- new API endpoints
+- changed API response formats
+- database/schema changes
+- authentication logic
+- Socket.IO events
+- server-side profile data
+- shop/credit logic
+- moderation actions
+- Games/Stratus backend changes
+- Wisp server changes
+- server-side SynnFlix logic
+
+Do NOT let SVG frontend code assume a backend feature exists unless the deployed backend actually contains it.
+
+
+==================================================
+1. SVG AUTH LIFECYCLE IS NOT FULLY PROVEN
+==================================================
+
+The SVG runtime stores its session token at:
+
+localStorage["synnical.svg.session.v1"]
+
+The bridge contains support for Bearer authentication.
+
+A synthetic browser test proved that:
+
+- successful SVG register response is intercepted correctly
+- a valid 64-character token is accepted
+- token is written to localStorage
+- pinned SVG works
+- synnical-001.svg works
+
+However full REAL authentication lifecycle still needs testing.
+
+Must prove:
+
+- real login
+- real successful signup
+- successful /api/auth/me
+- token sent on later API requests as:
+
+  Authorization: Bearer <token>
+
+- authentication survives reload
+- authentication survives closing/reopening
+- logout removes backend session
+- logout removes SVG local token
+- stale token recovery
+- expired token recovery
+- user A login
+- user A logout
+- user B login
+- no session leakage between accounts
+
+DO NOT call SVG authentication finished just because token storage works.
+
+
+==================================================
+2. REAL USER SIGNUP "FAILED TO FETCH" BUG
+==================================================
+
+Some actual users have reported:
+
+Failed to fetch
+
+during registration from the SVG version.
+
+This has NOT been fully root-caused.
+
+Already proven:
+
+- CDN Origin preflight can work
+- https://cdn.jsdelivr.net is allowed
+- Content-Type is allowed
+- Authorization is allowed
+- X-Synnical-Client is allowed
+- relevant HTTP methods are allowed
+- synthetic registration path works
+
+But real user failure still exists or existed.
+
+Investigate:
+
+- request never leaving browser
+- browser-specific CORS issue
+- preflight differences
+- network failure
+- service worker interference
+- stale cached SVG
+- stale cached JS
+- stale service worker
+- backend 4xx
+- backend 5xx
+- auth/session state
+- registration validation
+- different browsers/devices
+- old SVG aliases using different client builds
+
+IMPORTANT:
+
+Do NOT map every backend failure to generic:
+
+Failed to fetch
+
+If backend responds, show a meaningful user-facing error.
+
+
+==================================================
+3. @MAIN SVG LINKS HAVE HAD VERSION DIVERGENCE
+==================================================
+
+A serious CDN/cache issue was previously proven.
+
+At one point:
+
+synnical-001.svg = CURRENT wrapper
+
+synnical-050.svg = OLD wrapper
+
+synnical-100.svg = OLD wrapper
+
+So GitHub main being updated does NOT guarantee all jsDelivr @main SVG aliases immediately serve the same bytes.
+
+Every release MUST validate all 100 SVG URLs.
+
+Do not test only 001.
+
+
+==================================================
+4. JSDELIVR CACHE BEHAVIOUR
+==================================================
+
+Observed @main cache headers included roughly:
+
+cache-control:
+public, max-age=604800, s-maxage=43200
+
+Therefore @main can remain stale.
+
+For release testing:
+
+1. build SVG
+2. commit
+3. push GitHub
+4. get exact commit SHA
+5. test immutable pinned SHA URL first
+6. test all required assets
+7. then verify @main aliases
+8. compare hashes
+9. do not treat HTTP 200 as proof the content is current
+
+Pinned example format:
+
+https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@COMMIT_SHA/index.svg
+
+Permanent alias format:
+
+https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-001.svg
+
+through
+
+https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-100.svg
+
+
+==================================================
+5. OLD HASHED ASSETS MUST NOT BE DELETED
+==================================================
+
+This has already caused an actual SVG failure.
+
+Cached SVG/client files referenced old hashed chunks that were later deleted from the GitHub tree.
+
+A repair recovered historical assets.
+
+75 historical assets were discovered.
+72 were already present.
+3 missing historical files had to be restored.
+
+One example was an old SynnFlix chunk.
+
+There is now a CDN asset retention rule.
+
+CRITICAL RELEASE RULE:
+
+Treat assets/ as effectively append-only.
+
+Do NOT delete old hashed:
+
+- JS chunks
+- CSS chunks
+- SynnFlix chunks
+- lazy-loaded chunks
+- worker files
+
+just because the newest build does not reference them.
+
+Cached SVG documents may still reference old hashes for days.
+
+Any cleanup needs proof that no live/cached SVG references that asset.
+
+
+==================================================
+6. SCRAMJET / BROWSER SVG PARITY
+==================================================
+
+Work has already been done to make Scramjet work from the SVG/CDN environment.
+
+Changes included:
+
+- proxy assets becoming CDN-scope aware
+- Scramjet service worker scope changes
+- proxy prefix changes
+- internal Browser URL detection changes
+- repository-relative service worker imports
+- runtime bridge public-asset rewriting
+
+An early version FAILED TypeScript because runtime-bridge.ts lost required exports:
+
+installSvgRuntimeBridge
+
+getSvgSessionToken
+
+SYNNICAL_BACKEND_ORIGIN
+
+That failed build was NOT published.
+
+The exports were later repaired and TypeScript passed.
+
+Still needs real runtime validation.
+
+Test:
+
+- service worker registration
+- service worker scope
+- /~/sj/ routes
+- controller imports
+- Scramjet modules
+- WASM
+- workers
+- Wisp WebSocket
+- browsing ordinary HTTPS websites
+- navigation
+- reload
+- back
+- forward
+- fresh browser
+- browser with old SW installed
+- cached SVG build
+- latest SVG build
+
+
+==================================================
+7. WISP
+==================================================
+
+Synnical currently hosts its own Wisp server instance.
+
+Underlying implementation:
+
+@mercuryworkshop/wisp-js
+
+server import:
+
+@mercuryworkshop/wisp-js/server
+
+Normal Wisp endpoint:
+
+wss://synnical.co.uk/wisp/
+
+The Synnical VPS runs this itself.
+
+This is our own self-hosted Wisp instance, powered by Mercury Workshop's wisp-js.
+
+The SVG static frontend can live on GitHub/jsDelivr, but Wisp still requires a live server somewhere.
+
+Current runtime after Games repair confirmed:
+
+Wisp proxy server mounted at /wisp/
+
+There is also support for:
+
+/wisp-nl/
+
+for the Netherlands/SOCKS5 route.
+
+Current startup reported Netherlands SOCKS5 route as NOT CONFIGURED.
+
+
+==================================================
+8. SOCKET.IO SVG PARITY
+==================================================
+
+SVG has a Socket.IO bridge.
+
+Static REST/API success does NOT prove realtime works.
+
+Need real browser tests for:
+
+- Socket.IO connection
+- authentication
+- reconnect
+- chat messages
+- live updates
+- presence
+- Who's Online
+- disconnect
+- logout
+- account switching
+- multiple tabs
+- two different users simultaneously
+- SVG session token propagation
+
+
+==================================================
+9. CORS
+==================================================
+
+Current backend has SVG-specific CORS support for:
+
+https://cdn.jsdelivr.net
+
+It has previously allowed:
+
+Content-Type
+Authorization
+X-Synnical-Client
+Range
+
+and methods including:
+
+GET
+POST
+PUT
+PATCH
+DELETE
+OPTIONS
+
+If SVG hosting is moved away from jsDelivr, CORS must be updated deliberately.
+
+DO NOT solve authenticated CORS problems by blindly using:
+
+Access-Control-Allow-Origin: *
+
+with credentialed requests.
+
+
+==================================================
+10. DO NOT PUT PRIVATE SERVER SECRETS IN GITHUB
+==================================================
+
+Never upload:
+
+- database credentials
+- session secrets
+- server API keys
+- private provider credentials
+- private Stratus credentials
+- VPN/SOCKS credentials
+- private tokens
+
+NEXT_PUBLIC_* variables are public client values by design.
+
+Private server configuration must remain server-side.
+
+
+==================================================
+11. STRATUS / GAMES FAILURE THAT WAS JUST FIXED
+==================================================
+
+Games was seriously broken.
+
+Symptoms included:
+
+- Games section not loading correctly
+- unknown errors
+- raw HTML displayed in UI
+- responses such as:
+
+  <!DOCTYPE html><html...
+
+Root cause was proven.
+
+Production was missing:
+
+/var/www/synnical/stratus/sites.json
+
+server.ts enables Stratus by default, but intentionally disables the cloud gaming API when sites.json is missing.
+
+Because Stratus was disabled:
+
+/api/games/cloud/*
+
+fell through into Next.js.
+
+Next.js then returned its HTML 404 page.
+
+Games client displayed that HTML.
+
+Timeline proved this.
+
+Stratus worked through:
+
+2026-08-18 08:29 UTC
+
+and started reporting:
+
+Stratus cloud-gaming API: DISABLED
+
+from:
+
+2026-08-18 15:31 UTC
+
+The config was lost during a deployment.
+
+A real known-good config was recovered.
+
+Known-good SHA-256:
+
+22a62889c349087b0d6d6f4449701b85c7892d3db5ac9a78d7fd5f11abefaeba
+
+It contained:
+
+1 configured site
+
+and a valid API key.
+
+Instead of putting private config back inside the deployment directory, it was moved to:
+
+/var/lib/synnical/stratus/sites.json
+
+Production .env now points:
+
+STRATUS_SITES_PATH=/var/lib/synnical/stratus/sites.json
+
+This prevents a future source deployment from deleting the provider configuration.
+
+After repair:
+
+Stratus mounted at /api/games
+
+Stratus cloud-gaming API mounted at:
+
+/api/games/cloud/v1/*
+
+Wisp remained mounted.
+
+Direct catalog test:
+
+HTTP 200
+application/json
+225 games
+
+Public catalog:
+
+HTTP 200
+application/json
+225 games
+
+Invalid queue request:
+
+HTTP 401
+JSON
+NOT HTML
+
+Therefore the routing-layer raw HTML bug is currently repaired.
+
+
+==================================================
+12. GAMES IS NOT FULLY VALIDATED YET
+==================================================
+
+Restoring Stratus routing does NOT mean the whole Games subsystem is done.
+
+Still test:
+
+- Games catalog UI
+- artwork
+- metadata
+- favourites
+- history
+- session creation
+- authentication to Stratus
+- queue
+- provider_wait
+- allocation
+- startGame
+- signalling WebSocket
+- embed
+- video/audio stream
+- input capture
+- fullscreen
+- keyboard/mouse
+- game heartbeat
+- latency reporting
+- stale session cleanup
+- quitSession
+- session errors
+- provider timeout
+- pool exhaustion
+- account creation
+- session switching
+- opening Chat while game runs
+- opening other Synnical side panels while game runs
+- game focus must NOT hide Synnical chrome outside Games
+- returning from game
+- reload during session
+- browser disconnect
+- duplicate session protection
+
+No internal Stratus terminology should leak into normal UI unnecessarily.
+
+
+==================================================
+13. GAMES ERROR HANDLING MUST BE HARDENED
+==================================================
+
+No user should ever see raw:
+
+<!DOCTYPE html>
+
+Next.js pages
+
+Express internals
+
+proxy codes
+
+raw stack traces
+
+unexplained internal IDs
+
+"Unknown error"
+
+Every API consumer should:
+
+1. inspect HTTP status
+2. inspect Content-Type
+3. parse JSON only when JSON
+4. handle text/HTML separately
+5. map backend errors to understandable user messages
+6. log technical detail internally
+7. never dump raw server output into visible UI
+
+
+==================================================
+14. 100 SVG LINKS MUST ALL BE VALIDATED
+==================================================
+
+Do NOT assume all aliases are identical.
+
+For:
+
+synnical-001.svg
+...
+synnical-100.svg
+
+validate:
+
+- HTTP 200
+- Content-Type image/svg+xml
+- expected SVG wrapper SHA
+- expected bundle reference
+- referenced main JS exists
+- referenced CSS exists
+- every lazy JS chunk exists
+- every historical required chunk exists
+- WASM exists
+- workers exist
+- Scramjet files exist
+- service worker exists
+- no alias serves an obsolete wrapper
+
+Also verify:
+
+index.svg
+
+and one immutable commit-pinned release.
+
+
+==================================================
+15. CURRENT STATIC/CDN RETENTION POLICY
+==================================================
+
+The SVG repo has already suffered from old asset deletion breaking cached clients.
+
+Keep:
+
+CDN-ASSET-RETENTION.md
+
+and obey it.
+
+Future SVG builds must preserve old hashed assets.
+
+
+==================================================
+16. MAIN WEBSITE VS SVG FRONTEND
+==================================================
+
+The main website frontend and SVG frontend do NOT need to be updated together.
+
+It is acceptable to have:
+
+synnical.co.uk frontend
+= older version
+
+GitHub/jsDelivr SVG frontend
+= newer version
+
+As long as the newer SVG frontend remains compatible with the backend API running at synnical.co.uk.
+
+Therefore SVG frontend development can continue entirely through GitHub.
+
+But server-side features still require backend deployment.
+
+
+==================================================
+17. DO NOT SHUT DOWN THE BACKEND YET
+==================================================
+
+The SVG files would still LOAD if the Synnical VPS went offline.
+
+But most Synnical functionality would stop.
+
+Currently dependent on backend/server:
+
+- register
+- login
+- auth/me
+- logout
+- sessions
+- accounts
+- profiles
+- messages
+- friends
+- presence
+- Socket.IO
+- shop
+- credits
+- server settings
+- uploads
+- moderation
+- games
+- Stratus
+- Wisp
+- SynnFlix APIs
+- media progress
+- server-connected features
+
+Therefore:
+
+DO NOT shut down the Synnical backend/VPS unless these are migrated somewhere else first.
+
+
+==================================================
+18. RECOMMENDED FUTURE HOSTNAME ARCHITECTURE
+==================================================
+
+A cleaner architecture would be:
+
+STATIC SVG FRONTEND:
+
+GitHub + jsDelivr
+
+BACKEND API:
+
+https://api.synnical.co.uk
+
+SOCKET.IO:
+
+https://api.synnical.co.uk/socket.io/
+
+WISP:
+
+wss://api.synnical.co.uk/wisp/
+
+GAMES:
+
+https://api.synnical.co.uk/api/games/cloud/
+
+Then:
+
+https://synnical.co.uk
+
+could be removed or replaced without breaking the SVG frontend.
+
+
+==================================================
+19. PROFILE MESSAGE COUNT BUG
+==================================================
+
+User reports profile message counts are broken for everybody / when viewing other people's profiles.
+
+Forensics found a suspicious privacy/UI wiring bug.
+
+The API calculates message counts using actual Message rows.
+
+That part is correct.
+
+However UI/settings currently mixes profile-stat visibility with:
+
+profile.showFriends
+
+"Show Profile Statistics" is using the same key as the friends-display setting.
+
+The profile modal also gates message-count display using that setting.
+
+Those are unrelated concepts.
+
+Need:
+
+- dedicated profile statistics visibility key
+- preserve friends visibility independently
+- ensure viewed user's stats privacy is respected
+- ensure message counts come from Message rows
+- test own profile
+- test another user's profile
+- test stats private
+- test stats friends-only if supported
+- test stats public
+- verify count updates after new messages
+
+
+==================================================
+20. PROFILE MODAL UX
+==================================================
+
+Current requested behaviour:
+
+Profile modal should close when clicking outside it.
+
+The X should NOT be the only way to close it.
+
+Also support:
+
+Escape key
+
+Need:
+
+- backdrop click closes
+- click inside modal does NOT close
+- Escape closes
+- avoid conflicts with nested dialogs/dropdowns
+
+
+==================================================
+21. STAFF BADGES
+==================================================
+
+Staff role/tag badges beside usernames are considered visually too large.
+
+Need smaller:
+
+- font
+- padding
+- icon size
+- height
+
+but keep them readable.
+
+Roles/tags themselves are already structurally passed through the profile UI.
+
+This is mainly a presentation/UI issue unless further runtime testing proves otherwise.
+
+
+==================================================
+22. DESKTOP STARTUP BUG
+==================================================
+
+Normal Synnical startup currently contains behaviour that may call:
+
+openPanel(initialPanel)
+
+when no usable restored window exists.
+
+This can make normal startup feel like Synnical automatically launches the previous/default app instead of opening to a neutral desktop.
+
+Requested behaviour:
+
+NORMAL LAUNCH:
+
+neutral desktop
+
+DO NOT automatically reopen last-used app.
+
+EXPLICIT STARTUP APPS:
+
+still allowed.
+
+Do not break intentional startupApps functionality while removing accidental last-panel launch behaviour.
+
+
+==================================================
+23. APP WINDOWS SHOULD OPEN MAXIMIZED
+==================================================
+
+Production currently launches new windows with:
+
+maximized: false
+
+A previous isolated work tree already contains a maximize-on-launch implementation.
+
+Requested behaviour:
+
+- newly opened apps maximize by default
+- restore geometry is preserved
+- restore button returns to sensible size/position
+- resizing/restoring works
+- reopening app behaves consistently
+
+
+==================================================
+24. WINDOWS-LIKE OPEN ANIMATION
+==================================================
+
+Opening applications should have a Windows-like launch animation.
+
+There is already a Synnical animation settings system.
+
+Existing hooks include:
+
+synnical-os-no-animations
+
+and:
+
+--synnical-os-animation-scale
+
+Animation should respect:
+
+- animations enabled/disabled
+- configured animation speed
+- preferably reduced-motion preference
+
+Do not bolt on a completely separate animation system.
+
+
+==================================================
+25. SETTINGS RANDOM BLACK SCREEN / ERROR PAGE
+==================================================
+
+User reported changing settings sometimes causes the entire Synnical UI to go black and display:
+
+This page couldn't load
+Reload to try again, or go back.
+Reload
+Back
+
+This has NOT been root-caused yet.
+
+Do NOT blindly patch global error handling.
+
+Need reproduce and inspect:
+
+- exact setting changed
+- component error
+- unhandled promise rejection
+- state producer/consumer mismatch
+- invalid localStorage value
+- settings navigation
+- theme change
+- wallpaper change
+- animation settings
+- lazy panel failures
+- global ErrorBoundary
+- nested panel ErrorBoundary
+
+Goal:
+
+A single Settings failure should not kill the entire OS shell.
+
+Use proper panel-level isolation where necessary.
+
+
+==================================================
+26. CONTINUE WATCHING IS DISCONTINUED
+==================================================
+
+LATEST PRODUCT DECISION:
+
+REMOVE CONTINUE WATCHING COMPLETELY.
+
+Do NOT repair it.
+Do NOT resurrect it.
+
+Older commits/tests mentioning Continue Watching are obsolete product requirements.
+
+Remove:
+
+- Continue Watching UI rail
+- desktop widget
+- CW-specific localStorage
+- CW-specific events
+- CW-specific retry/resume UI
+- CW-specific state
+- tests exclusively for Continue Watching
+- settings exclusively for Continue Watching
+
+Do NOT delete unrelated media history/playback data unless there is a proven reason.
+
+Normal SynnFlix playback must continue working.
+
+
+==================================================
+27. SYNNFLIX / MOVIES
+==================================================
+
+User previously reported movies getting stuck around 8 seconds.
+
+Need test independently of Continue Watching.
+
+Verify:
+
+- player loads
+- playback continues past 8 seconds
+- player iframe does not remount unnecessarily
+- ads/provider redirects do not kill playback
+- movie playback
+- TV playback
+- episode switching
+- pause/play
+- reload
+- returning to SynnFlix
+- watch parties if still retained
+- progress/history logic that remains after Continue Watching removal
+
+
+==================================================
+28. YOUTUBE APP IS CURRENTLY WRONG PRODUCT UX
+==================================================
+
+Current YouTube implementation is basically:
+
+Paste a YouTube URL/video ID
+
+then embed that one video.
+
+That is NOT the desired UX.
+
+Requested:
+
+YouTube should feel like an actual browsable Synnical app.
+
+Should support something closer to:
+
+- YouTube home/browse
+- searching videos
+- selecting videos inside Synnical
+- playback
+- navigation
+- no need to paste raw URLs
+
+Potentially reuse Synnical Browser/proxy infrastructure where appropriate.
+
+Current implementation is knowingly incomplete.
+
+
+==================================================
+29. CONNECTIONS ACCOUNT ISOLATION
+==================================================
+
+Previous bug:
+
+A user linked accounts/connections on THEIR OWN account and those connections appeared on everybody's accounts.
+
+Recent tests claimed connection data is account-scoped.
+
+Still verify at runtime with two accounts.
+
+Test:
+
+User A links connection
+User B must NOT see it
+
+User B links different connection
+User A must NOT see it
+
+Logout/login isolation
+
+Fresh browser
+
+Multiple tabs
+
+
+==================================================
+30. CREDITS / COINS
+==================================================
+
+There was a requested one-time global reset because existing accounts had unwanted coins.
+
+The reset ALREADY HAPPENED.
+
+Migration marker exists:
+
+2026-08-17-global-credit-reset-v1
+
+It recorded 28 accounts reset to zero.
+
+DO NOT execute another blind global reset.
+
+Some accounts currently have non-zero balances and those may be legitimate post-reset credits/staff changes.
+
+Existing requested behaviour also includes:
+
+- members earn 1 credit per message
+- staff can add credits
+- staff can remove credits
+- staff changes should be audited
+- shop purchases use credits
+- avatar decorations cost 1000 credits each
+
+Verify rather than resetting again.
+
+
+==================================================
+31. AVATAR DECORATIONS / PROFILE EFFECTS
+==================================================
+
+Requested:
+
+- animated avatar decorations
+- Discord-like decorations, not just a plain circle
+- price 1000 credits each
+- staff have access to all decorations
+- preview decoration in Shop
+- preview decoration before equipping on profile
+- profile effects
+- preview before saving
+
+Need verify current SVG parity for these.
+
+
+==================================================
+32. THEME / UI REQUESTS TO VERIFY
+==================================================
+
+Requested previous product requirements include:
+
+- default theme = "blood"
+- wallpaper should not be transparent
+- interactive buttons should remain visibly dark blue
+- Adwaita Sans default UI font
+
+Verify SVG matches intended current product design.
+
+
+==================================================
+33. GAME / SIDE PANEL BUG
+==================================================
+
+Previous runtime bug:
+
+While playing a game, opening another Synnical panel such as Chat caused the side panel / Synnical UI chrome to disappear.
+
+There is a regression test saying game focus cannot hide Synnical chrome outside Games.
+
+Still runtime test it.
+
+Game fullscreen/focus logic must not hide other Synnical panels unexpectedly.
+
+
+==================================================
+34. INTERNAL TERMINOLOGY LEAK
+==================================================
+
+User does NOT want ugly implementation details exposed to ordinary users.
+
+Examples:
+
+Stratus
+Wisp
+proxy internals
+raw IDs
+provider codes
+unexplained internal session identifiers
+
+Internal names can exist in logs/admin diagnostics.
+
+Normal users should see useful product language.
+
+
+==================================================
+35. ID SHARING UX
+==================================================
+
+Previously some parts of Synnical exposed IDs without making it clear:
+
+- what the ID represents
+- who the user should send it to
+- how it should be used
+
+Any share/invite/session code should have understandable user-facing UX.
+
+
+==================================================
+36. CHAT / PRESENCE OLDER BUGS
+==================================================
+
+Previous reported issues include:
+
+- Chat input showing reconnecting
+- messages not sending
+- Who's Online not working
+
+Recent releases changed chat/presence code, but runtime parity still needs real testing.
+
+Test:
+
+- send
+- receive
+- edit
+- reconnect
+- optimistic messages
+- duplicate messages
+- two-user chat
+- presence
+- visibility rules
+- Who's Online
+- SVG Socket.IO auth
+
+
+==================================================
+37. PROFILE IMAGE UPLOADS
+==================================================
+
+Older reported issue:
+
+PFP/banner uploads succeeded but were not visible afterward.
+
+Need test SVG specifically:
+
+- upload PFP
+- immediate preview
+- reload
+- another user views profile
+- banner upload
+- persistence
+- public/uploads URL rewriting
+- CDN/SVG asset path handling
+
+
+==================================================
+38. MUSIC / SPOTIFY
+==================================================
+
+Older reported Spotify/music errors exist.
+
+Need validate current Music app from SVG.
+
+Do not assume main-site Music passing means SVG Music passes.
+
+
+==================================================
+39. GEFORCE NOW
+==================================================
+
+GeForce NOW is registered as a first-class Synnical app.
+
+Previous regressions existed around it.
+
+Test SVG separately:
+
+- launch
+- Browser/proxy interaction
+- authentication
+- navigation
+- fullscreen
+- app switching
+
+
+==================================================
+40. FULL RELEASE REQUIREMENT
+==================================================
+
+Before calling SVG Synnical release-ready, test:
+
+AUTH:
+- register
+- login
+- me
+- reload
+- logout
+- session expiration
+- account switching
+
+MULTI-USER:
+- User A
+- User B
+- normal member
+- staff
+
+PROFILES:
+- own profile
+- other profile
+- message count
+- privacy
+- decorations
+- badges
+- connections
+
+CHAT:
+- messages
+- reconnect
+- presence
+- friends
+- moderation
+
+DESKTOP:
+- neutral boot
+- startup apps
+- maximized launch
+- restore
+- minimize
+- app switching
+- launch animations
+- workspaces if retained
+
+SETTINGS:
+- every setting
+- persistence
+- invalid/stale values
+- no global crash
+
+GAMES:
+- catalog
+- launch
+- queue
+- provider
+- fullscreen
+- signalling
+- input
+- quitting
+- cleanup
+- side-panel switching
+
+BROWSER:
+- Scramjet
+- Wisp
+- SW
+- fresh browser
+- cached browser
+
+MEDIA:
+- SynnFlix
+- Movies > 8 sec
+- YouTube
+- Music
+- GeForce NOW
+
+SHOP:
+- credits
+- purchases
+- decorations
+- previews
+- staff credit controls
+
+SVG/CDN:
+- index.svg
+- 001 through 100
+- pinned commit
+- all chunks
+- old asset retention
+- fresh cache
+- stale cache
+
+ERROR HANDLING:
+- no raw HTML
+- no raw stack traces
+- no "Unknown error" unless absolutely unavoidable
+- understandable user messages
+
+
+==================================================
+WORKING METHOD
+==================================================
+
+Do NOT rush changes directly into production.
+
+For every fix:
+
+1. inspect actual source
+2. reproduce / prove root cause
+3. make smallest controlled change
+4. typecheck
+5. run regression tests
+6. run full release suite when appropriate
+7. build
+8. test isolated candidate
+9. verify backend/API compatibility
+10. publish SVG
+11. test immutable pinned build
+12. verify every permanent alias
+13. runtime test
+14. preserve database/accounts/uploads/private configuration
+
+Do not patch .next manually.
+
+Do not delete production DB.
+
+Do not wipe accounts/messages/uploads.
+
+Do not reset credits again.
+
+Do not put Stratus private config into GitHub.
+
+Do not delete historical SVG hashed assets.
+
+
+==================================================
+CURRENT IMPORTANT SERVER STATE
+==================================================
+
+Production:
+
+/var/www/synnical
+
+Database:
+
+/var/www/synnical/prisma/db/custom.db
+
+Persistent uploads:
+
+/var/lib/synnical/uploads
+
+Persistent private Stratus config:
+
+/var/lib/synnical/stratus/sites.json
+
+PM2 process:
+
+synnical
+
+Custom server:
+
+server.ts
+
+Stack:
+
+Next.js 16.3
+React 19
+TypeScript
+Prisma
+SQLite
+Socket.IO
+custom Node server
+PM2
+Caddy/reverse proxy
+Wisp
+Scramjet
+Stratus
+
+
+==================================================
+IMPORTANT PRODUCT DIRECTION
+==================================================
+
+The SVG frontend can evolve separately from the ordinary synnical.co.uk frontend.
+
+Do NOT require every SVG frontend release to also update the main Synnical website.
+
+However:
+
+backend/API compatibility must always be preserved.
+
+The intended long-term architecture is:
+
+GitHub/jsDelivr
+    |
+    v
+Synnical SVG frontend
+    |
+    v
+stable Synnical backend/API
+    |
+    +-- database
+    +-- Socket.IO
+    +-- Wisp
+    +-- Stratus Games
+    +-- uploads
+    +-- authentication
+
+Eventually preferably:
+
+api.synnical.co.uk
+
+for backend services, allowing the normal synnical.co.uk frontend to be removed/replaced independently.
+
+
+==================================================
+END HANDOFF
+==================================================
