@@ -1,0 +1,25 @@
+{
+  "name": "synnical-os-web-ui",
+  "version": "1.0.0",
+  "description": "Synnical OS - New Minimal Desktop UI with Real Icons",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "next": "^15.x",
+    "react": "^19.x",
+    "react-dom": "^19.x",
+    "lucide-react": "^0.447.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.x",
+    "@types/react": "^19.x",
+    "@types/react-dom": "^19.x",
+    "typescript": "^5.x",
+    "tailwindcss": "^4.x"
+  }
+}
