@@ -53,3 +53,29 @@ Stage Summary:
 ✅ VPS: https://synnical.co.uk (live and running)
 - PM2 status: online, PID 180437
 - All 8 source files + 2 assets uploaded successfully
+
+---
+Task ID: 3
+Agent: Z.ai Code (Main)
+Task: Create SVG client files + CDN links
+
+Work Log:
+- Created synnical-desktop.svg (static SVG with live clock)
+- Created synnical-desktop-interactive.svg (full HTML/JS embedded in foreignObject)
+- Updated PERMANENT-LINKS.txt with new CDN URLs
+- Pushed all to GitHub (himothysigma/synnical-svg main branch)
+- Uploaded SVGs to VPS /var/www/synnical/public/
+- Restarted PM2 to serve new static files
+- Verified all CDN links return HTTP 200
+
+Stage Summary:
+✅ CDN Links (jsDelivr):
+   https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-desktop.svg
+   https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-desktop-interactive.svg
+
+✅ VPS Links:
+   https://synnical.co.uk/synnical-desktop.svg
+   https://synnical.co.uk/synnical-desktop-interactive.svg
+
+✅ GitHub:
+   https://github.com/himothysigma/synnical-svg (main branch)
