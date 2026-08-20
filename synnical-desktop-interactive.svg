@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+>
+  <foreignObject
+    width="100%"
+    height="100%"
+  >
+    <html
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+    >
+      <head>
+        <script><![CDATA[
+
+(function () {
+  var XHTML_NS = "http://www.w3.org/1999/xhtml";
+  var foreignObject = document.querySelector("foreignObject");
+  if (!foreignObject) return;
+  var root = foreignObject.firstElementChild;
+  if (!root) return;
+  var origCE = document.createElement.bind(document);
+  var origCENS = document.createElementNS.bind(document);
+
+  try {
+    Object.defineProperty(document, "head", {
+      get: function () { return root.querySelector("head"); },
+      configurable: true
+    });
+    Object.defineProperty(document, "body", {
+      get: function () { return root.querySelector("body"); },
+      configurable: true
+    });
+    Object.defineProperty(document, "documentElement", {
+      get: function () { return root; },
+      configurable: true
+    });
+  } catch (_) {}
+
+  document.createElement = function (tag, options) {
+    if (typeof tag === "string") {
+      try { return origCENS(XHTML_NS, tag, options); }
+      catch (_) { return origCENS(XHTML_NS, tag); }
+    }
+    return origCE(tag, options);
+  };
+
+  document.createElementNS = function (ns, tag, options) {
+    if (ns == null || ns === XHTML_NS) {
+      try { return origCENS(XHTML_NS, tag, options); }
+      catch (_) { return origCENS(XHTML_NS, tag); }
+    }
+    try { return origCENS(ns, tag, options); }
+    catch (_) { return origCENS(ns, tag); }
+  };
+
+  try {
+    Object.defineProperty(document, "getElementById", {
+      value: function (id) {
+        var safe = String(id).replace(/["\\]/g, "\\$&");
+        return root.querySelector('[id="' + safe + '"]');
+      },
+      configurable: true,
+      writable: true
+    });
+  } catch (_) {}
+
+  try {
+    document.querySelector = function (selector) {
+      try { return root.querySelector(selector) || origQS(selector); }
+      catch (_) { return origQS(selector); }
+    };
+    var origQS = document.querySelector.bind(document);
+  } catch (_) {}
+})();
+
+        ]]></script>
+
+        <style><![CDATA[
+html, body, #root {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Synnical OS Desktop Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.desktop-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('./brand/wallpapers/sakura-samurai-1.png') center/cover no-repeat;
+  overflow: hidden;
+}
+
+.desktop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.08);
+}
+
+.desktop-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 1.5rem;
+}
+
+.day-display {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-text {
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 100;
+  letter-spacing: 0.3em;
+  color: rgba(0,0,0,0.8);
+  text-transform: uppercase;
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2rem;
+}
+
+.clock-widget {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(8px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0,0,0,0.7);
+  transition: background 0.2s;
+}
+
+.action-btn:hover { background: rgba(0,0,0,0.3); }
+
+.clock-display {
+  background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.time-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.time-main {
+  font-size: 3.75rem;
+  font-weight: 100;
+  color: rgba(0,0,0,0.85);
+}
+
+.time-sec {
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: rgba(0,0,0,0.5);
+}
+
+.date-display {
+  font-size: 0.875rem;
+  color: rgba(0,0,0,0.55);
+  margin-top: 0.25rem;
+  font-weight: 300;
+}
+
+.widgets-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.widgets-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.widget-card {
+  background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.date-widget { min-width: 100px; }
+.date-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.date-icon { width: 32px; height: 32px; border-radius: 8px; background: #60a5fa; display: flex; align-items: center; justify-content: center; }
+.date-day-num { font-size: 2.25rem; font-weight: 300; color: rgba(255,255,255,0.9); }
+.date-month { font-size: 0.75rem; color: #93c5fd; font-weight: 500; }
+.date-year { font-size: 1.125rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+
+.calendar-widget { padding: 0.75rem; }
+.cal-header { font-size: 10px; color: #f87171; text-align: center; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 24px); gap: 4px; }
+.cal-day-header { font-size: 9px; color: rgba(255,255,255,0.4); text-align: center; font-weight: 500; }
+.cal-day { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 10px; border-radius: 6px; color: rgba(255,255,255,0.6); cursor: pointer; }
+.cal-day:hover { background: rgba(255,255,255,0.1); }
+.cal-day.today { background: #ef4444; color: white; }
+
+.notes-widget { min-width: 220px; overflow: hidden; }
+.notes-header { background: #facc15; padding: 0.5rem 1rem; }
+.notes-title { font-size: 0.875rem; font-weight: 600; color: rgba(0,0,0,0.8); }
+.notes-body { padding: 0.75rem 1rem; }
+.notes-text { font-size: 0.875rem; color: rgba(255,255,255,0.75); line-height: 1.5; white-space: pre-line; }
+.notes-time { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 0.75rem; }
+
+.dock-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.dock-bar {
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock-item {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.dock-item:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-8px) scale(1.1);
+}
+
+.dock-item svg { width: 36px; height: 36px; }
+
+.dock-item::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+}
+
+.dock-separator {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.2);
+  margin: 0 0.25rem;
+}
+        ]]></style>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Synnical OS - Desktop</title>
+      </head>
+
+      <body>
+        <div class="desktop-container" id="desktop">
+          <div class="desktop-overlay"></div>
+          <div class="desktop-content">
+            
+            <!-- Day Display -->
+            <div class="day-display">
+              <h1 class="day-text" id="day-name">SATURDAY</h1>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="bottom-section">
+              
+              <!-- Clock Widget -->
+              <div class="clock-widget">
+                <div class="quick-actions">
+                  <button class="action-btn" title="Refresh">↻</button>
+                  <button class="action-btn" title="Weather">☀</button>
+                  <button class="action-btn" title="Settings">⚙</button>
+                </div>
+                <div class="clock-display">
+                  <div class="time-display">
+                    <span class="time-main" id="time-main">11:10</span>
+                    <span class="time-sec" id="time-sec">03</span>
+                  </div>
+                  <p class="date-display" id="full-date">Saturday, January 21</p>
+                </div>
+              </div>
+
+              <!-- Widgets Panel -->
+              <div class="widgets-panel">
+                <div class="widgets-row">
+                  <div class="widget-card date-widget">
+                    <div class="date-header">
+                      <div class="date-icon">📅</div>
+                      <span class="date-day-num" id="w-date-day">20</span>
+                    </div>
+                    <p class="date-month" id="w-date-month">August</p>
+                    <p class="date-year" id="w-date-year">2026</p>
+                  </div>
+                  <div class="widget-card calendar-widget">
+                    <p class="cal-header" id="cal-header">AUG • 2026</p>
+                    <div class="cal-grid" id="cal-grid"></div>
+                  </div>
+                </div>
+                <div class="widget-card notes-widget">
+                  <div class="notes-header"><p class="notes-title">Notes</p></div>
+                  <div class="notes-body">
+                    <p class="notes-text">Your text won't erase&#10;If you switch to another app</p>
+                    <p class="notes-time" id="notes-time">6/15/2022 3:27:52 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dock -->
+            <div class="dock-container">
+              <nav class="dock-bar" id="dock">
+                <!-- Dock items will be inserted by JS -->
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <script><![CDATA[
+// Synnical OS Desktop Controller
+(function() {
+  const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayHeaders = ['M','T','W','T','F','S','S'];
+
+  // Dock icons data
+  const dockApps = [
+    { name: 'Synnical', icon: '<rect width="34" height="34" rx="8" fill="#0a0a0a"/><rect x="1" y="1" width="32" height="32" rx="7" fill="none" stroke="#ec4899" stroke-width="1.5"/><text x="17" y="24" text-anchor="middle" font-family="Arial Black" font-size="18" font-weight="900" fill="#ec4899">S</text>' },
+    { name: 'Search', icon: '<circle cx="17" cy="17" r="8" stroke="white" stroke-width="2" fill="none"/><path d="M23 23l4 4" stroke="white" stroke-width="2"/>' },
+    { name: 'Files', icon: '<path d="M7 10h14l3 4v12H7z" fill="#FDB300"/><path d="M7 14h17v12H7z" fill="#F5A623" opacity="0.8"/>' },
+    { name: 'Browser', icon: '<circle cx="17" cy="17" r="16" fill="#4285F4"/><circle cx="17" cy="17" r="6" fill="white"/>' },
+    { name: 'VS Code', icon: '<rect width="34" height="34" rx="8" fill="#007ACC"/><path d="M11 11l7 6.5-7 6.5M19 11l7 6.5-7 6.5" stroke="white" stroke-width="2" fill="none"/>' },
+    { name: 'Discord', icon: '<circle cx="17" cy="17" r="16" fill="#5865F2"/><circle cx="12" cy="14" r="3" fill="white"/><circle cx="22" cy="14" r="3" fill="white"/>' },
+    { name: 'Spotify', icon: '<circle cx="17" cy="17" r="16" fill="#1DB954"/><path d="M10 13c4-2 10-2 14 0M10 17c4-1.5 10-1.5 14 0M10 21c4-1 10-1 14 0" stroke="black" stroke-width="2" fill="none"/>' },
+    { name: 'Terminal', icon: '<rect width="34" height="34" rx="8" fill="#1E1E1E"/><path d="M10 12l5 4-5 4M18 20h5" stroke="#4EC9B0" stroke-width="1.5" fill="none"/>' },
+    { name: 'Notes', icon: '<rect width="34" height="34" rx="8" fill="#FEF08A" stroke="#EAB308"/><line x1="10" y1="12" x2="24" y2="12" stroke="#854D0E"/><line x1="10" y1="17" x2="24" y2="17" stroke="#854D0E"/><line x1="10" y1="22" x2="19" y2="22" stroke="#854D0E"/>' },
+  ];
+
+  // Update clock
+  function updateClock() {
+    const now = new Date();
+    
+    document.getElementById('day-name').textContent = days[now.getDay()];
+    document.getElementById('time-main').textContent = 
+      String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('time-sec').textContent = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('full-date').textContent = 
+      days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    
+    document.getElementById('w-date-day').textContent = now.getDate();
+    document.getElementById('w-date-month').textContent = months[now.getMonth()];
+    document.getElementById('w-date-year').textContent = now.getFullYear();
+    document.getElementById('notes-time').textContent = new Date().toLocaleString();
+    
+    document.getElementById('cal-header').textContent = 
+      months[now.getMonth()].slice(0,3).toUpperCase() + ' • ' + now.getFullYear();
+    
+    buildCalendar(now);
+  }
+
+  // Build calendar
+  function buildCalendar(date) {
+    const grid = document.getElementById('cal-grid');
+    if (!grid) return;
+    
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    const today = date.getDate();
+    
+    let html = dayHeaders.map(d => `<span class="cal-day-header">${d}</span>`).join('');
+    
+    const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+    for (let i = 0; i < startOffset; i++) html += '<span></span>';
+    for (let i = 1; i <= daysInMonth; i++) {
+      html += `<span class="cal-day${i === today ? ' today' : ''}">${i}</span>`;
+    }
+    
+    grid.innerHTML = html;
+  }
+
+  // Build dock
+  function buildDock() {
+    const dock = document.getElementById('dock');
+    if (!dock) return;
+    
+    let html = '';
+    dockApps.forEach(app => {
+      html += `<button class="dock-item" title="${app.name}">
+        <svg viewBox="0 0 34 34">${app.icon}</svg>
+      </button>`;
+    });
+    
+    // Separator + Trash
+    html += `<div class="dock-separator"></div>`;
+    html += `<button class="dock-item" title="Trash">
+      <svg viewBox="0 0 34 34"><path d="M7 10h20M19 10v18a2 2 0 01-2 2H13a2 2 0 01-2-2V10m3 0V8a2 2 0 012-2h4a2 2 0 012 2v2" stroke="white" stroke-width="1.5" fill="none"/></svg>
+    </button>`;
+    
+    dock.innerHTML = html;
+  }
+
+  // Init
+  updateClock();
+  buildDock();
+  setInterval(updateClock, 1000);
+
+  console.log('%c✨ Synnical OS Desktop Loaded', 'color: #ec4899; font-size: 14px; font-weight: bold;');
+})();
+        ]]></script>
+      </body>
+    </html>
+  </foreignObject>
+</svg>

@@ -102,3 +102,7 @@ These URLs intentionally use the GitHub main branch.
 098 https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-098.svg
 099 https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-099.svg
 100 https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-100.svg
+
+# Synnical OS Desktop UI (New - 2026-08-20)
+DESKTOP https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-desktop.svg
+DESKTOP-INTERACTIVE https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@main/synnical-desktop-interactive.svg

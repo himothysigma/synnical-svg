@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="100%"
+  height="100%"
+  viewBox="0 0 1920 1080"
+>
+  <defs>
+    <style>
+      .day-text { font-family: 'Inter', -apple-system, sans-serif; font-weight: 100; font-size: 180px; fill: rgba(0,0,0,0.8); letter-spacing: 0.3em; }
+      .clock-time { font-family: 'Inter', -apple-system, sans-serif; font-weight: 100; font-size: 72px; fill: rgba(0,0,0,0.85); }
+      .clock-sec { font-family: 'Inter', -apple-system, sans-serif; font-weight: 200; font-size: 32px; fill: rgba(0,0,0,0.5); }
+      .clock-date { font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 14px; fill: rgba(0,0,0,0.55); }
+      .widget-bg { fill: rgba(0,0,0,0.15); backdrop-filter: blur(20px); rx: 16px; }
+      .widget-border { stroke: rgba(255,255,255,0.1); stroke-width: 1; fill: none; rx: 16px; }
+      .dock-bg { fill: rgba(0,0,0,0.25); rx: 16px; }
+      .dock-icon { cursor: pointer; transition: transform 0.2s; }
+      .dock-icon:hover { transform: translateY(-8px) scale(1.1); }
+    </style>
+    
+    <!-- Wallpaper pattern (cherry blossom samurai reference) -->
+    <pattern id="wallpaper" patternUnits="userSpaceOnUse" width="1920" height="1080">
+      <image xlink:href="./brand/wallpapers/sakura-samurai-1.png" x="0" y="0" width="1920" height="1080" preserveAspectRatio="xMidYMid slice"/>
+    </pattern>
+    
+    <!-- Glass effect -->
+    <filter id="glass">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#wallpaper)"/>
+  <rect width="100%" height="100%" fill="rgba(0,0,0,0.08)"/>
+  
+  <!-- Center Day Display -->
+  <text x="960" y="400" text-anchor="middle" class="day-text" id="day-display">SATURDAY</text>
+  
+  <!-- Clock Widget (Bottom Left) -->
+  <g transform="translate(80, 850)">
+    <rect class="widget-bg" x="0" y="-60" width="280" height="90"/>
+    <rect class="widget-border" x="0" y="-60" width="280" height="90"/>
+    <text x="140" y="0" text-anchor="middle" class="clock-time" id="clock-time">11:10</text>
+    <text x="210" y="-5" class="clock-sec" id="clock-sec">03</text>
+    <text x="140" y="22" text-anchor="middle" class="clock-date" id="clock-date">Saturday, January 21</text>
+  </g>
+  
+  <!-- Date/Calendar Widgets (Right Side) -->
+  <g transform="translate(1600, 750)">
+    <!-- Date Card -->
+    <rect class="widget-bg" x="0" y="0" width="110" height="100"/>
+    <rect class="widget-border" x="0" y="0" width="110" height="100"/>
+    <text x="55" y="45" text-anchor="middle" font-size="36" fill="rgba(255,255,255,0.9)" id="date-day">20</text>
+    <text x="55" y="68" text-anchor="middle" font-size="11" fill="rgba(96,165,250,0.8)" id="date-month">August</text>
+    <text x="55" y="85" text-anchor="middle" font-size="16" fill="rgba(255,255,255,0.7)" id="date-year">2026</text>
+  </g>
+  
+  <!-- Notes Widget -->
+  <g transform="translate(1475, 865)">
+    <rect fill="#FACC15" x="0" y="0" width="225" height="28" rx="8" ry="8"/>
+    <text x="12" y="18" font-size="12" font-weight="600" fill="rgba(0,0,0,0.75)">Notes</text>
+    <rect class="widget-bg" x="0" y="30" width="225" height="70"/>
+    <rect class="widget-border" x="0" y="30" width="225" height="70"/>
+    <text x="12" y="52" font-size="11" fill="rgba(255,255,255,0.7)">Your text won't erase</text>
+    <text x="12" y="66" font-size="11" fill="rgba(255,255,255,0.7)">If you switch to another app</text>
+    <text x="12" y="92" font-size="9" fill="rgba(255,255,255,0.3)">6/15/2022 3:27:52 PM</text>
+  </g>
+  
+  <!-- Dock (Bottom Center) -->
+  <g transform="translate(760, 1020)">
+    <rect class="dock-bg" x="0" y="-50" width="400" height="56"/>
+    
+    <!-- Synnical Icon -->
+    <g class="dock-icon" transform="translate(15, -42)">
+      <rect width="34" height="34" rx="8" fill="#0a0a0a"/>
+      <rect x="1" y="1" width="32" height="32" rx="7" fill="none" stroke="#ec4899" stroke-width="1.5" opacity="0.3"/>
+      <text x="17" y="24" text-anchor="middle" font-family="Arial Black" font-size="20" font-weight="900" fill="#ec4899">S</text>
+    </g>
+    
+    <!-- Search Icon -->
+    <g class="dock-icon" transform="translate(58, -42)">
+      <rect width="34" height="34" rx="8" fill="rgba(255,255,255,0.1)"/>
+      <circle cx="17" cy="17" r="8" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M23 23l4 4" stroke="white" stroke-width="2"/>
+    </g>
+    
+    <!-- Files Icon -->
+    <g class="dock-icon" transform="translate(101, -42)">
+      <rect width="34" height="34" rx="8" fill="#FDB300"/>
+      <path d="M8 12h18v14H8z" fill="#F5A623" opacity="0.8"/>
+      <path d="M8 12V8h6l3 3h9" stroke="#B45309" stroke-width="1" fill="none"/>
+    </g>
+    
+    <!-- Chrome Icon -->
+    <g class="dock-icon" transform="translate(144, -42)">
+      <circle cx="17" cy="17" r="16" fill="#4285F4"/>
+      <circle cx="17" cy="17" r="6" fill="white"/>
+    </g>
+    
+    <!-- VS Code Icon -->
+    <g class="dock-icon" transform="translate(187, -42)">
+      <rect width="34" height="34" rx="8" fill="#007ACC"/>
+      <path d="M10 10l8 7-8 7M18 10l8 7-8 7" stroke="white" stroke-width="2" fill="none"/>
+    </g>
+    
+    <!-- Discord Icon -->
+    <g class="dock-icon" transform="translate(230, -42)">
+      <circle cx="17" cy="17" r="16" fill="#5865F2"/>
+      <circle cx="12" cy="14" r="3" fill="white"/>
+      <circle cx="22" cy="14" r="3" fill="white"/>
+    </g>
+    
+    <!-- Spotify Icon -->
+    <g class="dock-icon" transform="translate(273, -42)">
+      <circle cx="17" cy="17" r="16" fill="#1DB954"/>
+      <path d="M10 13c4-2 10-2 14 0M10 17c4-1.5 10-1.5 14 0M10 21c4-1 10-1 14 0" stroke="black" stroke-width="2" fill="none"/>
+    </g>
+    
+    <!-- Terminal Icon -->
+    <g class="dock-icon" transform="translate(316, -42)">
+      <rect width="34" height="34" rx="8" fill="#1E1E1E"/>
+      <path d="M10 12l5 4-5 4M17 20h5" stroke="#4EC9B0" stroke-width="1.5" fill="none"/>
+    </g>
+    
+    <!-- Notes Icon -->
+    <g class="dock-icon" transform="translate(359, -42)">
+      <rect width="34" height="34" rx="8" fill="#FEF08A" stroke="#EAB308" stroke-width="1"/>
+      <line x1="10" y1="12" x2="24" y2="12" stroke="#854D0E" stroke-width="1"/>
+      <line x1="10" y1="17" x2="24" y2="17" stroke="#854D0E" stroke-width="1"/>
+      <line x1="10" y1="22" x2="19" y2="22" stroke="#854D0E" stroke-width="1"/>
+    </g>
+  </g>
+  
+  <!-- Live Update Script -->
+  <script><![CDATA[
+    function updateClock() {
+      const now = new Date();
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      
+      // Update day
+      const dayEl = document.getElementById('day-display');
+      if (dayEl) dayEl.textContent = days[now.getDay()];
+      
+      // Update time
+      const timeEl = document.getElementById('clock-time');
+      const secEl = document.getElementById('clock-sec');
+      const dateEl = document.getElementById('clock-date');
+      
+      if (timeEl) timeEl.textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      if (secEl) secEl.textContent = String(now.getSeconds()).padStart(2,'0');
+      if (dateEl) dateEl.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+      
+      // Update date widget
+      const dateDay = document.getElementById('date-day');
+      const dateMonth = document.getElementById('date-month');
+      const dateYear = document.getElementById('date-year');
+      
+      if (dateDay) dateDay.textContent = now.getDate();
+      if (dateMonth) dateMonth.textContent = months[now.getMonth()];
+      if (dateYear) dateYear.textContent = now.getFullYear();
+    }
+    
+    updateClock();
+    setInterval(updateClock, 1000);
+  ]]></script>
+</svg>
