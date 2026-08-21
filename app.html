@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Classroom</title>
+    <link rel="icon" type="image/png" href="./brand/google-classroom.png" />
+    <link rel="stylesheet" href="./assets/bundle.css" />
+    <style>html,body,#root{box-sizing:border-box;margin:0;padding:0;width:100%;height:100%;min-width:100%;min-height:100%;overflow:hidden;background:#000}</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      const root = document.getElementById("root");
+      const showFailure = (error) => {
+        console.error("[synnical-svg] application boot failed", error);
+        if (!root) return;
+        root.textContent = "";
+        const panel = document.createElement("pre");
+        panel.style.cssText = "box-sizing:border-box;margin:0;padding:24px;white-space:pre-wrap;font:14px monospace;color:#ff8b8b;background:#050505;width:100%;height:100%";
+        panel.textContent = "Synnical failed to start.\n" + String(error && (error.stack || error.message || error));
+        root.appendChild(panel);
+      };
+      window.addEventListener("error", (event) => showFailure(event.error || event.message));
+      window.addEventListener("unhandledrejection", (event) => showFailure(event.reason));
+      try {
+        await import(new URL("./assets/runtime.js", window.location.href).href);
+        await import(new URL("./assets/bundle.js", window.location.href).href);
+      } catch (error) {
+        showFailure(error);
+      }
+    </script>
+  </body>
+</html>

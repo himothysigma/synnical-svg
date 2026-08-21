@@ -1,0 +1,1 @@
+import{c,d as f}from"./chunk-V7BNAKW4.js";var e=c(f(),1),u=Object.defineProperty,n=(r,t)=>u(r,"name",{value:t,configurable:!0});function o(r){let t=e.useRef(r);return e.useEffect(()=>{t.current=r}),e.useMemo(()=>((...a)=>t.current?.(...a)),[])}n(o,"useCallbackRef");export{o as a};
