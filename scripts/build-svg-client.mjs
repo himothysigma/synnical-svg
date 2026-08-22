@@ -58,6 +58,9 @@ const aliasPlugin = {
       contents = contents
         .replace('scope: "/",', 'scope: new URL(".", SERVICE_WORKER_URL).pathname,')
         .replace('if (!prefix.startsWith("/~/sj/"))', 'if (!prefix.includes("/~/sj/"))')
+        .replace('const proto = location.protocol === "https:" ? "wss" : "ws"', 'const proto = location.protocol === "https:" ? "wss" : "ws"; const svgRuntime = globalThis.__synnicalSvgRuntime')
+        .replace('return `${proto}://${location.host}/wisp-nl/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp-nl/` : `${proto}://${location.host}/wisp-nl/`')
+        .replace('return `${proto}://${location.host}/wisp/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp/` : `${proto}://${location.host}/wisp/`')
         .replace('config: {\n        scramjetPath:', 'config: {\n        prefix: new URL("./~/sj/", location.href).pathname,\n        scramjetPath:')
       return { contents, loader: "ts", resolveDir: path.dirname(args.path) }
     })
