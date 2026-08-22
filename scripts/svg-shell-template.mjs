@@ -1,5 +1,6 @@
-function renderBootFragment() {
-  return `<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+export function renderAppHtml() {
+  return `<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,73 +37,13 @@ function renderBootFragment() {
         height: 100%;
       }
     </style>
-    <script><![CDATA[
-      (function () {
-        var XHTML_NS = "http://www.w3.org/1999/xhtml";
-        var root = document.documentElement;
-        if (!root) return;
-        var origCE = document.createElement.bind(document);
-        var origCENS = document.createElementNS.bind(document);
-        Object.defineProperty(document, "head", { get: function () { return root.querySelector("head"); }, configurable: true });
-        Object.defineProperty(document, "body", { get: function () { return root.querySelector("body"); }, configurable: true });
-        Object.defineProperty(document, "documentElement", { get: function () { return root; }, configurable: true });
-        document.createElement = function (tagName, options) {
-          return typeof tagName === "string" ? origCENS(XHTML_NS, tagName, options) : origCE(tagName, options);
-        };
-        document.createElementNS = function (namespace, qualifiedName, options) {
-          return (namespace == null || namespace === XHTML_NS)
-            ? origCENS(XHTML_NS, qualifiedName, options)
-            : origCENS(namespace, qualifiedName, options);
-        };
-        Object.defineProperty(document, "getElementById", {
-          value: function (id) {
-            return root.querySelector('[id="' + String(id).replace(/["\\\\]/g, "\\\\$&") + '"]');
-          },
-          configurable: true,
-          writable: true,
-        });
-        document.getElementsByTagName = function (tagName) {
-          return root.getElementsByTagNameNS(XHTML_NS, tagName);
-        };
-        document.getElementsByTagNameNS = function (namespace, tagName) {
-          return root.getElementsByTagNameNS(namespace, tagName);
-        };
-        document.getElementsByClassName = function (className) {
-          return root.getElementsByClassName(className);
-        };
-        var origQS = document.querySelector.bind(document);
-        var origQSA = document.querySelectorAll.bind(document);
-        document.querySelector = function (selector) {
-          try {
-            return root.querySelector(selector) || origQS(selector);
-          } catch (error) {
-            return origQS(selector);
-          }
-        };
-        document.querySelectorAll = function (selector) {
-          try {
-            var matches = root.querySelectorAll(selector);
-            return matches.length ? matches : origQSA(selector);
-          } catch (error) {
-            return origQSA(selector);
-          }
-        };
-      })();
-    ]]></script>
-    <script><![CDATA[
-      window.addEventListener("error", function (event) {
-        console.error("[synnical-svg] boot error:", event.error || event.message);
-      });
-      window.addEventListener("unhandledrejection", function (event) {
-        console.error("[synnical-svg] boot rejection:", event.reason);
-      });
-    ]]></script>
+    <script src="./assets/runtime.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="./assets/runtime.js"></script>
-    <script type="module"><![CDATA[
+    <script type="module">
       const root = document.getElementById("root");
+
       const showFailure = (error) => {
         console.error("[synnical-svg] application boot failed", error);
         if (!root) return;
@@ -123,15 +64,10 @@ function renderBootFragment() {
       } catch (error) {
         showFailure(error);
       }
-    ]]></script>
+    </script>
   </body>
 </html>
 `
-}
-
-export function renderAppHtml() {
-  return `<!DOCTYPE html>
-${renderBootFragment()}`
 }
 
 export function renderSvgShell() {
@@ -139,7 +75,16 @@ export function renderSvgShell() {
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1280 720">
   <rect width="100%" height="100%" fill="#000000" />
   <foreignObject x="0" y="0" width="100%" height="100%">
-${renderBootFragment()}
+    <iframe
+      xmlns="http://www.w3.org/1999/xhtml"
+      src="./app.html?synnicalLink=index.svg"
+      title="Synnical OS"
+      allow="autoplay; clipboard-read; clipboard-write; display-capture; fullscreen; microphone; camera"
+      allowfullscreen="allowfullscreen"
+      loading="eager"
+      referrerpolicy="no-referrer"
+      style="display:block;border:0;margin:0;padding:0;width:100%;height:100%;background:#000"
+    ></iframe>
   </foreignObject>
 </svg>
 `
