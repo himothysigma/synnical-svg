@@ -127,12 +127,21 @@ await esbuild.build({
   },
 })
 
+const bundlePath = path.join(buildAssetsDir, "bundle.js")
+const svgBundle = (await readFile(bundlePath, "utf8"))
+  .replaceAll("/brand/", "./brand/")
+  .replaceAll("/logo.svg", "./logo.svg")
+await writeFile(bundlePath, svgBundle)
+
 const nextCssDir = sourcePath(".next/static/chunks")
 const nextCssFiles = (await readdir(nextCssDir))
   .filter((file) => file.endsWith(".css"))
   .sort()
 const compiledCss = await Promise.all(nextCssFiles.map((file) => readFile(path.join(nextCssDir, file), "utf8")))
-await writeFile(path.join(buildAssetsDir, "bundle.css"), compiledCss.join("\n"))
+await writeFile(
+  path.join(buildAssetsDir, "bundle.css"),
+  compiledCss.join("\n").replaceAll("url(/brand/", "url(../brand/"),
+)
 await cp(buildAssetsDir, assetsDir, { recursive: true, force: true })
 
 await cp(sourcePath("public"), repoDir, { recursive: true, force: true })
