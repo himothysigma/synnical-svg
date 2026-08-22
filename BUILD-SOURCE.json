@@ -1,7 +1,7 @@
 {
   "client": "current Synnical production source",
   "entry": "src/app/page.tsx",
-  "sourceFingerprint": "374cbcb93d0cdfbe027dffe0c433d713978abfeedbdf1182bddebbfca5c6c91c",
+  "sourceFingerprint": "9d6195dc54b0dda7d70ba95a4acd1ebf705db3f06da257887d626482b1b92cda",
   "storageIsolation": "per SVG filename",
   "apiCredentials": "bearer token bridge to synnical.co.uk; cookies intentionally not shared across origins",
   "runtimeRewrites": [
