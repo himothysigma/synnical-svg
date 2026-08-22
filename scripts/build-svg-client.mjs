@@ -82,7 +82,7 @@ await mkdir(buildAssetsDir, { recursive: true })
 
 const common = {
   bundle: true,
-  format: "esm",
+  format: "iife",
   platform: "browser",
   target: ["chrome110", "edge110", "firefox115"],
   jsx: "automatic",
@@ -107,15 +107,15 @@ await esbuild.build({
   ...common,
   entryPoints: [scriptsPath("svg-runtime.ts")],
   outfile: path.join(buildAssetsDir, "runtime.js"),
+  globalName: "SynnicalSvgRuntimeBoot",
 })
 
 await esbuild.build({
   ...common,
-  entryPoints: { bundle: scriptsPath("svg-entry.tsx") },
-  outdir: buildAssetsDir,
-  splitting: true,
-  chunkNames: "chunks/[name]-[hash]",
+  entryPoints: [scriptsPath("svg-entry.tsx")],
+  outfile: path.join(buildAssetsDir, "bundle.js"),
   assetNames: "media/[name]-[hash]",
+  globalName: "SynnicalSvgAppBoot",
   plugins: [aliasPlugin],
   loader: {
     ".png": "file",

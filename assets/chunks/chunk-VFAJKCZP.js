@@ -1,1 +1,0 @@
-import{c as o,d as i,e as n}from"./chunk-V7BNAKW4.js";var r=o(i(),1),v=o(n(),1),c=Object.defineProperty,a=(e,t)=>c(e,"name",{value:t,configurable:!0}),u=r.createContext(void 0);function d(e){let t=r.useContext(u);return e||t||"ltr"}a(d,"useDirection");export{d as a};
