@@ -1,17 +1,11 @@
 # Synnical SVG
 
-Standalone Synnical OS SVG client built from the current production frontend.
+This repo publishes the Synnical OS web app as immutable SVG entrypoints for jsDelivr.
 
-The frontend is distributed through GitHub/jsDelivr.
-Accounts, profiles, chat, SynnFlix, uploads, Socket.IO,
-Wisp and other server-backed functionality connect to
-the normal Synnical backend.
+Use:
 
-Each SVG filename has its own local storage, authentication token and
-Scramjet cookie jar. API calls deliberately omit browser cookies and use the
-link's bearer token only. Signing into the same account on another link still
-hydrates that account's server-backed app data after the user logs in there.
+- `https://cdn.jsdelivr.net/gh/himothysigma/synnical-svg@COMMIT/index.svg`
+- `https://jsdelivr.b-cdn.net/gh/himothysigma/synnical-svg@COMMIT/index.svg`
 
-Run `node scripts/build-svg-client.mjs` with `SYNNICAL_SOURCE_DIR` pointing at
-the production Synnical source. The builder merges new generated chunks into
-`assets/` so historical immutable CDN releases remain intact.
+Every `synnical-XXX.svg` file is a separate isolated launch surface with its own storage and session state.
+The files are generated from the current Synnical OS source tree.

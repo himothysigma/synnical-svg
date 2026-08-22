@@ -154,12 +154,16 @@ const assetFiles = await readdir(buildAssetsDir)
 const cssFile = assetFiles.find((file) => file === "bundle.css")
 if (!cssFile) throw new Error("The SVG client build did not produce bundle.css")
 
-await writeFile(path.join(repoDir, "app.html"), renderAppHtml({ cssFile }))
-await writeFile(path.join(repoDir, "index.svg"), renderSvgShell({ linkId: "index.svg" }))
+await writeFile(path.join(repoDir, "app.html"), renderAppHtml())
+await writeFile(path.join(repoDir, "index.svg"), renderSvgShell())
 for (let index = 1; index <= 100; index += 1) {
   const filename = `synnical-${String(index).padStart(3, "0")}.svg`
-  await writeFile(path.join(repoDir, filename), renderSvgShell({ linkId: filename }))
+  await writeFile(path.join(repoDir, filename), renderSvgShell())
 }
+
+await cp(sourcePath("public/logo.svg"), path.join(repoDir, "favicon.svg"), { force: true })
+await writeFile(path.join(repoDir, ".nojekyll"), "")
+await writeFile(path.join(repoDir, "_redirects"), "/* /index.svg 200\n")
 
 await writeFile(path.join(repoDir, "BUILD-SOURCE.json"), JSON.stringify({
   client: "current Synnical production source",
