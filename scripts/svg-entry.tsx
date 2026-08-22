@@ -7,7 +7,6 @@ import { AuthProvider } from "synnical-source/src/hooks/use-auth"
 import { UserProfileProvider } from "synnical-source/src/components/user-profile-modal"
 import { ThemeApplier } from "synnical-source/src/components/theme-applier"
 import { SettingsApplier } from "synnical-source/src/components/settings-generic"
-import { AdInjector } from "synnical-source/src/components/ad-injector"
 
 const root = document.getElementById("root")
 if (!root) throw new Error("Synnical SVG root element is missing")
@@ -26,7 +25,6 @@ createRoot(root, { onUncaughtError: showFatalError }).render(
     <UserProfileProvider>
       <ThemeApplier />
       <SettingsApplier />
-      <AdInjector />
       <Home />
     </UserProfileProvider>
     <Toaster />

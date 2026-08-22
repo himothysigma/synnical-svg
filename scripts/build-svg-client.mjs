@@ -72,6 +72,10 @@ const aliasPlugin = {
   },
 }
 
+// Hashed split chunks are immutable. Keeping the previous build beside the new
+// one makes the CDN repository look like a mixture of releases and can retain
+// removed code indefinitely. Each publication must contain one clean client.
+await rm(assetsDir, { recursive: true, force: true })
 await mkdir(assetsDir, { recursive: true })
 await rm(buildAssetsDir, { recursive: true, force: true })
 await mkdir(buildAssetsDir, { recursive: true })

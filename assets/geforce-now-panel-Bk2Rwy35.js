@@ -1,1 +1,0 @@
-import{n as e}from"./createLucideIcon-3FcpvzLy.js";import{v as t}from"./bundle.js";var n=e();function r(){return(0,n.jsx)(t,{initialUrl:`https://play.geforcenow.com/`,embedded:!0,embeddedLabel:`GeForce NOW`,immersiveGame:!0})}export{r as GeForceNowPanel};

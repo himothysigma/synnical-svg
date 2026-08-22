@@ -7,7 +7,7 @@ function escapeAttribute(value) {
 }
 
 export function renderSvgShell({ linkId }) {
-  const appUrl = `./app.html?synnicalLink=${encodeURIComponent(linkId)}`
+  const appUrl = `/?synnicalLink=${encodeURIComponent(linkId)}`
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
   <rect width="100%" height="100%" fill="#000000" />

@@ -14,8 +14,9 @@
  */
 
 import { readFileSync, existsSync, readdirSync } from 'fs';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { createHash } from 'crypto';
+import { fileURLToPath } from 'url';
 
 interface ValidationResult {
   file: string;
@@ -30,9 +31,6 @@ interface ValidationResult {
   warnings: string[];
   valid: boolean;
 }
-
-// Known expected SHA-256 from handoff document
-const EXPECTED_SHA = '9aa7f0160ff6b4ee5592b6cd00c92128954dc026a57d49fe08d25e934ad99805';
 
 function calculateSha256(content: Buffer): string {
   return createHash('sha256').update(content).digest('hex');
@@ -120,7 +118,7 @@ async function main() {
   console.log('║     Synnical SVG Link Validator (#14)            ║');
   console.log('╚════════════════════════════════════════════════════╝\n');
 
-  const baseDir = '/home/z/my-project';
+  const baseDir = dirname(dirname(fileURLToPath(import.meta.url)));
   const assetsDir = join(baseDir, 'assets');
 
   if (!existsSync(assetsDir)) {
@@ -174,18 +172,16 @@ async function main() {
   console.log('╠════════════════════════════════════════════════════╣');
 
   const indexSha = results[0]?.sha256 || '';
-  const shaMatch = indexSha === EXPECTED_SHA;
-  console.log(`║ SHA Match: ${shaMatch ? 'YES ✅' : 'NO ❌'}.padEnd(41)║`);
+  console.log(`║ Index SHA: ${indexSha.slice(0, 16).padEnd(41)}║`);
   console.log('╚════════════════════════════════════════════════════╝');
 
-  // Version divergence check (#3)
-  console.log('\n🔍 Version divergence check (#3)...');
-  const uniqueShas = new Set(results.map(r => r.sha256));
-  if (uniqueShas.size === 1) {
-    console.log('   ✅ All SVGs identical (no divergence)');
-  } else {
-    console.log(`   ⚠️  ${uniqueShas.size} different versions found!`);
-  }
+  // Every alias intentionally has a different query-string storage identity.
+  // Matching wrapper validity is the parity signal; byte-identical hashes are
+  // neither expected nor desirable.
+  console.log('\n🔍 Wrapper parity check (#3)...');
+  console.log(totalInvalid === 0
+    ? '   ✅ All SVG aliases use the current isolated wrapper'
+    : `   ❌ ${totalInvalid} SVG aliases diverge from the current wrapper`);
 
   // Missing refs
   const missingRefFiles = results.filter(r => r.missingRefs.length > 0);

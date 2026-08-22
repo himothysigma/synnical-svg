@@ -9,12 +9,12 @@ const read = (file) => readFile(path.join(repo, file), "utf8")
 
 test("every SVG link uses its own fixed storage identity", async () => {
   const index = await read("index.svg")
-  assert.match(index, /app\.html\?synnicalLink=index\.svg/)
+  assert.match(index, /\/\?synnicalLink=index\.svg/)
 
   for (let number = 1; number <= 100; number += 1) {
     const filename = `synnical-${String(number).padStart(3, "0")}.svg`
     const source = await read(filename)
-    assert.match(source, new RegExp(`app\\.html\\?synnicalLink=${filename.replace(".", "\\.")}`))
+    assert.match(source, new RegExp(`\\/\\?synnicalLink=${filename.replace(".", "\\.")}`))
   }
 })
 
