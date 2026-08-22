@@ -1,7 +1,7 @@
 {
   "client": "current Synnical production source",
   "entry": "src/app/page.tsx",
-  "sourceFingerprint": "6628a83bd03a09d73c82eddafd955321b838e9ea9dbaadafc25a68757ad34e94",
+  "sourceFingerprint": "374cbcb93d0cdfbe027dffe0c433d713978abfeedbdf1182bddebbfca5c6c91c",
   "storageIsolation": "per SVG filename",
   "apiCredentials": "bearer token; cookies omitted"
 }
