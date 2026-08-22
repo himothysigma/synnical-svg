@@ -91,19 +91,6 @@ function renderBodyContent() {
     <script src="./assets/bundle.js"></script>`
 }
 
-export function renderAppHtml() {
-  return `<!DOCTYPE html>
-<html lang="en">
-  <head>
-${renderHeadContent()}
-  </head>
-  <body>
-${renderBodyContent()}
-  </body>
-</html>
-`
-}
-
 export function renderSvgShell() {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">

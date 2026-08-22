@@ -3,5 +3,13 @@
   "entry": "src/app/page.tsx",
   "sourceFingerprint": "374cbcb93d0cdfbe027dffe0c433d713978abfeedbdf1182bddebbfca5c6c91c",
   "storageIsolation": "per SVG filename",
-  "apiCredentials": "bearer token; cookies omitted"
+  "apiCredentials": "bearer token bridge to synnical.co.uk; cookies intentionally not shared across origins",
+  "runtimeRewrites": [
+    "fetch",
+    "XMLHttpRequest",
+    "WebSocket",
+    "element URL attributes",
+    "localStorage",
+    "sessionStorage"
+  ]
 }

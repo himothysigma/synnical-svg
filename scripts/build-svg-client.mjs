@@ -3,7 +3,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
-import { renderAppHtml, renderSvgShell } from "./svg-shell-template.mjs"
+import { renderSvgShell } from "./svg-shell-template.mjs"
 
 const repoDir = path.resolve(import.meta.dirname, "..")
 const defaultSource = path.resolve(repoDir, "../scramjet-fix/app/synnical-main-batch1-full-validated-20260821")
@@ -41,6 +41,13 @@ function resolveSourceModule(candidate) {
   return candidate
 }
 
+function replaceRequired(contents, from, to, label) {
+  if (!contents.includes(from)) {
+    throw new Error(`SVG build patch failed: ${label}`)
+  }
+  return contents.replace(from, to)
+}
+
 const aliasPlugin = {
   name: "synnical-svg-aliases",
   setup(build) {
@@ -55,20 +62,20 @@ const aliasPlugin = {
     }))
     build.onLoad({ filter: /src\/hooks\/use-scramjet\.ts$/ }, async (args) => {
       let contents = await readFile(args.path, "utf8")
-      contents = contents
-        .replace('scope: "/",', 'scope: new URL(".", SERVICE_WORKER_URL).pathname,')
-        .replace('if (!prefix.startsWith("/~/sj/"))', 'if (!prefix.includes("/~/sj/"))')
-        .replace('const proto = location.protocol === "https:" ? "wss" : "ws"', 'const proto = location.protocol === "https:" ? "wss" : "ws"; const svgRuntime = globalThis.__synnicalSvgRuntime')
-        .replace('return `${proto}://${location.host}/wisp-nl/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp-nl/` : `${proto}://${location.host}/wisp-nl/`')
-        .replace('return `${proto}://${location.host}/wisp/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp/` : `${proto}://${location.host}/wisp/`')
-        .replace('config: {\n        scramjetPath:', 'config: {\n        prefix: new URL("./~/sj/", location.href).pathname,\n        scramjetPath:')
+      contents = replaceRequired(contents, 'scope: "/",', 'scope: new URL(".", SERVICE_WORKER_URL).pathname,', "service worker scope")
+      contents = replaceRequired(contents, 'if (!prefix.startsWith("/~/sj/"))', 'if (!prefix.includes("/~/sj/"))', "Scramjet route prefix check")
+      contents = replaceRequired(contents, 'const proto = location.protocol === "https:" ? "wss" : "ws"', 'const proto = location.protocol === "https:" ? "wss" : "ws"; const svgRuntime = globalThis.__synnicalSvgRuntime', "SVG Wisp runtime bridge")
+      contents = replaceRequired(contents, 'return `${proto}://${location.host}/wisp-nl/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp-nl/` : `${proto}://${location.host}/wisp-nl/`', "Netherlands Wisp endpoint")
+      contents = replaceRequired(contents, 'return `${proto}://${location.host}/wisp/`', 'return svgRuntime?.apiOrigin ? `${svgRuntime.apiOrigin.replace(/^http/, "ws")}/wisp/` : `${proto}://${location.host}/wisp/`', "direct Wisp endpoint")
+      contents = replaceRequired(contents, 'config: {\n        scramjetPath:', 'config: {\n        prefix: new URL("./~/sj/", location.href).pathname,\n        scramjetPath:', "Scramjet relative prefix")
       return { contents, loader: "ts", resolveDir: path.dirname(args.path) }
     })
     build.onLoad({ filter: /src\/app\/page\.tsx$/ }, async (args) => {
       let contents = await readFile(args.path, "utf8")
-      contents = contents.replace(
+      contents = replaceRequired(contents,
         'const navigation = performance.getEntriesByType("navigation")[0]',
         'const navigation = (window.parent !== window ? window.parent.performance : performance).getEntriesByType("navigation")[0]',
+        "embedded navigation timing",
       )
       return { contents, loader: "tsx", resolveDir: path.dirname(args.path) }
     })
@@ -166,7 +173,6 @@ const assetFiles = await readdir(buildAssetsDir)
 const cssFile = assetFiles.find((file) => file === "bundle.css")
 if (!cssFile) throw new Error("The SVG client build did not produce bundle.css")
 
-await writeFile(path.join(repoDir, "app.html"), renderAppHtml())
 await writeFile(path.join(repoDir, "index.svg"), renderSvgShell())
 for (let index = 1; index <= 100; index += 1) {
   const filename = `synnical-${String(index).padStart(3, "0")}.svg`
@@ -175,14 +181,16 @@ for (let index = 1; index <= 100; index += 1) {
 
 await cp(sourcePath("public/logo.svg"), path.join(repoDir, "favicon.svg"), { force: true })
 await writeFile(path.join(repoDir, ".nojekyll"), "")
-await writeFile(path.join(repoDir, "_redirects"), "/* /index.svg 200\n")
+await rm(path.join(repoDir, "app.html"), { force: true })
+await rm(path.join(repoDir, "_redirects"), { force: true })
 
 await writeFile(path.join(repoDir, "BUILD-SOURCE.json"), JSON.stringify({
   client: "current Synnical production source",
   entry: "src/app/page.tsx",
   sourceFingerprint: await sourceFingerprint(sourcePath("src")),
   storageIsolation: "per SVG filename",
-  apiCredentials: "bearer token; cookies omitted",
+  apiCredentials: "bearer token bridge to synnical.co.uk; cookies intentionally not shared across origins",
+  runtimeRewrites: ["fetch", "XMLHttpRequest", "WebSocket", "element URL attributes", "localStorage", "sessionStorage"],
 }, null, 2) + "\n")
 
 await rm(buildAssetsDir, { recursive: true, force: true })
